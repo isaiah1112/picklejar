@@ -32,12 +32,14 @@ class Jar(object):
         self.jar = os.path.abspath(filepath)
 
     def dump(self):
-        """
-        Dumps all the pickles out of the jar (loading them to memory)
-        :return: List of de-pickled objects
+        """Dumps all the pickles out of the jar (loading them to memory)
+
+        - **parameters** and **return types**::
+
+            :return: List of de-pickled objects
         """
         _pickles = []
-        _jar = open(self.jar, 'wb')
+        _jar = open(self.jar, 'rb')
         while True:
             try:
                 _pickles.append(pickle.load(_jar))
@@ -49,13 +51,19 @@ class Jar(object):
         else:
             return _pickles
 
-    def collect(self, pickles):
+    def collect(self, pickles, newjar=False):
+        """Pickle an item or list of items to a file.
+
+        - **parameters** and **return types**::
+
+            :param pickles: Item or list of items to pickle
+            :param newjar: Start a new jar (default = False)
+            :return: None
         """
-        Alias to collect function
-        :param pickles: Item or list of items to pickle
-        :return: None
-        """
-        _jar = open(self.jar, 'wb')
+        if newjar:
+            _jar = open(self.jar, 'wb')
+        else:
+            _jar = open(self.jar, 'ab')
         if type(pickles) is list:
             for pkle in pickles:
                 pickle.dump(pkle, _jar, pickle.HIGHEST_PROTOCOL)
@@ -63,11 +71,3 @@ class Jar(object):
             pickle.dump(pickles, _jar, pickle.HIGHEST_PROTOCOL)
         _jar.close()
         return None
-
-    def put_away(self, pickles):
-        """
-        Alias to collect function
-        :param pickles: Item or list of items to pickle
-        :return: None
-        """
-        return self.collect(pickles)
