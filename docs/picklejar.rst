@@ -7,6 +7,6 @@ Welcome to picklejar's documentation!
 =====================================
 
 .. automodule:: picklejar
-    :members: Infoblox, ipv4addr_obj
+    :members:
     :private-members:
 
