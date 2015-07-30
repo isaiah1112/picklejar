@@ -25,8 +25,12 @@ import os
 
 
 class Jar(object):
-    """
-    A file containing multiple pickle objects
+    """A file containing multiple pickle objects
+
+    - **parameters** and **return types**::
+
+        :param filepath: Path to the file
+        :return: Jar object
     """
     def __init__(self, filepath):
         self.jar = os.path.abspath(filepath)
