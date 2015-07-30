@@ -18,10 +18,6 @@ file/jar.  You can load the entire jar into memory or work with pickles individu
     You should have received a copy of the GNU Lesser Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-__author__ = 'Jesse Almanrode'
-__email__ = 'jesse@almanrode.com'
-__version__ = '1.0'
-
 
 # Imports
 import pickle
