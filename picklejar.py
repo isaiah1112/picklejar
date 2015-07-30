@@ -1,6 +1,6 @@
 # coding=utf-8
 """PickleJar is a python module that allows you to work with multiple pickles while reading/writing them to a single
-file/jar.  You can load the entire jar into memory or work with pickles individually inside the jar."""\
+file/jar.  You can load the entire jar into memory or work with pickles individually inside the jar."""
 # Copyright (C) 2015 Jesse Almanrode
 #
 #     This program is free software: you can redistribute it and/or modify
