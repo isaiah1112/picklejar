@@ -12,6 +12,8 @@ setup(name='picklejar',
       url='https://bitbucket.org/isaiah1112/picklejar',
       py_modules=['picklejar'],
       license='GNU Lesser General Public License v3 or later (LGPLv3+)',
+      install_requires=['dill>=0.2.4',
+                        ],
       platforms='any',
       classifiers=[
           'Programming Language :: Python',

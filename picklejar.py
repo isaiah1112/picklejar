@@ -17,8 +17,8 @@ file/jar.  You can load the entire jar into memory or work with pickles individu
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Imports
-import pickle
 import os
+import dill
 
 
 class Jar(object):
@@ -43,7 +43,7 @@ class Jar(object):
         _jar = open(self.jar, 'rb')
         while True:
             try:
-                _pickles.append(pickle.load(_jar))
+                _pickles.append(dill.load(_jar))
             except EOFError:
                 break
         _jar.close()
@@ -67,8 +67,8 @@ class Jar(object):
             _jar = open(self.jar, 'ab')
         if type(pickles) is list:
             for pkle in pickles:
-                pickle.dump(pkle, _jar, pickle.HIGHEST_PROTOCOL)
+                dill.dump(pkle, _jar, dill.HIGHEST_PROTOCOL)
         else:
-            pickle.dump(pickles, _jar, pickle.HIGHEST_PROTOCOL)
+            dill.dump(pickles, _jar, dill.HIGHEST_PROTOCOL)
         _jar.close()
         return None
