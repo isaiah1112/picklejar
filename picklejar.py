@@ -45,6 +45,19 @@ class Jar(object):
         else:
             return False
 
+    def remove(self):
+        """Remove the current jar file if it exists
+
+        - **parameters** and **return types**::
+
+            :return: True if jar file was removed, False otherwise
+        """
+        if self.exists():
+            os.remove(self.jar)
+            return True
+        else:
+            return False
+
     def dump(self):
         """Dumps all the pickles out of the jar (loading them to memory)
 
