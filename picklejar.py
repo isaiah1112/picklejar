@@ -31,6 +31,32 @@ class Jar(object):
     """
     def __init__(self, filepath):
         self.jar = os.path.abspath(filepath)
+        self._always_list_ = False
+
+    def exists(self):
+        """Does the Jar exist
+
+        - **parameters** and **return types**::
+
+            :return: True or False
+        """
+        if os.path.exists(self.jar):
+            return True
+        else:
+            return False
+
+    def remove(self):
+        """Remove the current jar file if it exists
+
+        - **parameters** and **return types**::
+
+            :return: True if jar file was removed, False otherwise
+        """
+        if self.exists():
+            os.remove(self.jar)
+            return True
+        else:
+            return False
 
     def dump(self):
         """Dumps all the pickles out of the jar (loading them to memory)
@@ -48,7 +74,10 @@ class Jar(object):
                 break
         _jar.close()
         if len(_pickles) == 1:
-            return _pickles[0]
+            if self._always_list_:
+                return _pickles
+            else:
+                return _pickles[0]
         else:
             return _pickles
 
