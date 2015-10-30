@@ -30,6 +30,7 @@ class Jar(object):
         :return: Jar object
     """
     def __init__(self, filepath):
+        filepath = os.path.abspath(os.path.expanduser(filepath))
         self.jar = os.path.abspath(filepath)
         self._always_list_ = False
 
@@ -88,7 +89,7 @@ class Jar(object):
 
             :param pickles: Item or list of items to pickle
             :param newjar: Start a new jar (default = False)
-            :return: None
+            :return: True on file write
         """
         if newjar:
             _jar = open(self.jar, 'wb')
@@ -100,4 +101,4 @@ class Jar(object):
         else:
             dill.dump(pickles, _jar, dill.HIGHEST_PROTOCOL)
         _jar.close()
-        return None
+        return True
