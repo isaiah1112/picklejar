@@ -71,7 +71,7 @@ class TestPickleJar(unittest.TestCase):
         :return: Jar.dump() is str
         """
         assert self.pkls.exists() is True
-        assert self.pkls._always_list_ is False
+        assert self.pkls.always_list is False
         assert type(self.pkls.dump()) in (str, basestring)
         pass
 
@@ -80,8 +80,8 @@ class TestPickleJar(unittest.TestCase):
         :return: Jar.dump() is list
         """
         assert self.pkls.exists() is True
-        self.pkls._always_list_ = True
-        assert self.pkls._always_list_ is True
+        self.pkls.always_list = True
+        assert self.pkls.always_list is True
         assert type(self.pkls.dump()) is list
         pass
 
