@@ -27,11 +27,13 @@ class Jar(object):
     - **parameters** and **return types**::
 
         :param filepath: Path to the file
+        :param always_list: Ensure that Jars with single pickle return as a list (default = False)
         :return: Jar object
     """
-    def __init__(self, filepath):
+    def __init__(self, filepath, always_list=False):
+        filepath = os.path.abspath(os.path.expanduser(filepath))
         self.jar = os.path.abspath(filepath)
-        self._always_list_ = False
+        self.always_list = always_list
 
     def exists(self):
         """Does the Jar exist
@@ -74,7 +76,7 @@ class Jar(object):
                 break
         _jar.close()
         if len(_pickles) == 1:
-            if self._always_list_:
+            if self.always_list:
                 return _pickles
             else:
                 return _pickles[0]
@@ -88,7 +90,7 @@ class Jar(object):
 
             :param pickles: Item or list of items to pickle
             :param newjar: Start a new jar (default = False)
-            :return: None
+            :return: True on file write
         """
         if newjar:
             _jar = open(self.jar, 'wb')
@@ -100,4 +102,4 @@ class Jar(object):
         else:
             dill.dump(pickles, _jar, dill.HIGHEST_PROTOCOL)
         _jar.close()
-        return None
+        return True
