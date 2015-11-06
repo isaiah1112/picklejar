@@ -1,4 +1,4 @@
-# [Picklejar][] <img src='http://www.jacomputing.net/resources/direct_download/picklejar_250px.png' align='right'>
+![PickleJar](http://www.jacomputing.net/resources/direct_download/picklejar_250px.png)
 
 ## Overview
 
