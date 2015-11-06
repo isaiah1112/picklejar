@@ -55,7 +55,7 @@ class TestPickleJar(unittest.TestCase):
         :return: Jar.dump() is list
         """
         assert self.pkls.exists() is True
-        assert self.pkls.dump() is list
+        assert type(self.pkls.dump()) is list
         pass
 
     def test_004_start(self):
@@ -72,7 +72,7 @@ class TestPickleJar(unittest.TestCase):
         """
         assert self.pkls.exists() is True
         assert self.pkls._always_list_ is False
-        assert self.pkls.dump() is str
+        assert type(self.pkls.dump()) in (str, basestring)
         pass
 
     def test_006_single_list(self):
@@ -82,7 +82,7 @@ class TestPickleJar(unittest.TestCase):
         assert self.pkls.exists() is True
         self.pkls._always_list_ = True
         assert self.pkls._always_list_ is True
-        assert self.pkls.dump() is list
+        assert type(self.pkls.dump()) is list
         pass
 
     def test_007_remove(self):
@@ -96,4 +96,4 @@ class TestPickleJar(unittest.TestCase):
 
 
 if __name__ == '__main__':
-    unittest.main(failfast=True)
+    unittest.main()
