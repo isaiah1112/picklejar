@@ -1,4 +1,4 @@
-# [picklejar][]
+# [Picklejar][] <img src='http://www.jacomputing.net/resources/direct_download/picklejar_250px.png' align='right'>
 
 ## Overview
 
@@ -21,6 +21,10 @@ or
 > python setup.py install
 
 This will ensure that all the requirements are met.
+
+## Documentation
+
+All documentation for using picklejar can be found in our [wiki](https://bitbucket.org/isaiah1112/picklejar/wiki/Home)
 
 ## Contributing
 
