@@ -2,8 +2,7 @@
 
 ## Overview
 
-[picklejar][] is a python module that allows you to work with multiple pickles while reading/writing them to a single
-file/jar.  You can load the entire jar into memory or work with pickles individually inside the jar.
+[picklejar][] is a python module that allows you to work with multiple pickles while reading/writing them to a single file/jar.
 
 ## License
 
@@ -24,7 +23,7 @@ This will ensure that all the requirements are met.
 
 ## Documentation
 
-All documentation for using picklejar can be found in our [wiki](https://bitbucket.org/isaiah1112/picklejar/wiki/Home)
+All documentation for using picklejar can be at [JA Computing](http://pydoc.jacomputing.net/picklejar/)
 
 ## Contributing
 
@@ -34,7 +33,7 @@ Report any issues or feature requests on the [BitBucket bug
 tracker](https://bitbucket.org/isaiah1112/picklejar/issues?status=new&status=open). Please include a minimal
 (not-) working example which reproduces the bug and, if appropriate, the
  traceback information.  Please do not request features already being worked
-towards (see the TODO file).
+towards.
 
 Code contributions are encouraged: please feel free to [fork the
 project](https://bitbucket.org/isaiah1112/picklejar) and submit pull requests.
