@@ -1,5 +1,3 @@
-![PickleJar](http://www.jacomputing.net/resources/direct_download/picklejar_250px.png)
-
 ## Overview
 
 [picklejar][] is a python module that allows you to work with multiple pickles while reading/writing them to a single file/jar.
