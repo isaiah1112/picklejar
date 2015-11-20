@@ -6,7 +6,12 @@
 import os
 import sys
 import unittest
-import picklejar
+try:
+    import picklejar
+except ImportError:
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    sys.path.append(project_root)
+    import picklejar
 
 __author__ = 'Jesse Almanrode (jesse@almanrode.com)'
 
@@ -55,7 +60,7 @@ class TestPickleJar(unittest.TestCase):
         :return: Jar.dump() is list
         """
         assert self.pkls.exists() is True
-        assert type(self.pkls.dump()) is list
+        assert isinstance(self.pkls.dump(), list)
         pass
 
     def test_004_start(self):
@@ -72,7 +77,7 @@ class TestPickleJar(unittest.TestCase):
         """
         assert self.pkls.exists() is True
         assert self.pkls.always_list is False
-        assert type(self.pkls.dump()) in (str, basestring)
+        assert isinstance(self.pkls.dump(), (str, basestring))
         pass
 
     def test_006_single_list(self):
@@ -82,18 +87,27 @@ class TestPickleJar(unittest.TestCase):
         assert self.pkls.exists() is True
         self.pkls.always_list = True
         assert self.pkls.always_list is True
-        assert type(self.pkls.dump()) is list
+        assert isinstance(self.pkls.dump(), list)
         pass
 
-    def test_007_remove(self):
-        """ Remove an existing Jar file
+    def test_007_collapse(self):
+        """ Ensure a list of objects is written as a single pickle object
+        :return: len(self.pkls.dump()) == 2
+        """
+        assert self.pkls.exists() is True
+        assert self.pkls.collect(test_list, newjar=True, collapse=True) is True
+        assert isinstance(self.pkls.dump(), list)
+        assert len(self.pkls.dump()) == 2
+        pass
+
+    def test_008_remove(self):
+        """ Clean up after all tests complete
         :return: Jar.remove is True
         """
         assert self.pkls.exists() is True
         assert self.pkls.remove() is True
         assert self.pkls.exists() is False
         pass
-
 
 if __name__ == '__main__':
     unittest.main()
