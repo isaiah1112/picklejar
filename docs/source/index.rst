@@ -9,9 +9,3 @@ PickleJar
 .. automodule:: picklejar
    :members:
    :private-members:
-
-Links
------
-
-* :ref:`genindex`
-* :ref:`search`

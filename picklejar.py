@@ -1,6 +1,7 @@
 # coding=utf-8
-"""PickleJar is a python module that allows you to work with multiple pickles while reading/writing them to a single
-file/jar.  You can load the entire jar into memory or work with pickles individually inside the jar."""
+"""PickleJar is a python module that allows you to work with multiple pickles while reading/writing 
+them to a single file/jar.
+"""
 # Copyright (C) 2015 Jesse Almanrode
 #
 #     This program is free software: you can redistribute it and/or modify
@@ -24,11 +25,9 @@ import dill
 class Jar(object):
     """A file containing multiple pickle objects
 
-    - **parameters** and **return types**::
-
-        :param filepath: Path to the file
-        :param always_list: Ensure that Jars with single pickle return as a list (default = False)
-        :return: Jar object
+    :param filepath: Path to the file
+    :param always_list: Ensure that Jars with single pickle return as a list (default = False)
+    :return: Jar object
     """
     def __init__(self, filepath, always_list=False):
         filepath = os.path.abspath(os.path.expanduser(filepath))
@@ -38,9 +37,7 @@ class Jar(object):
     def exists(self):
         """Does the Jar exist
 
-        - **parameters** and **return types**::
-
-            :return: True or False
+        :return: True or False
         """
         if os.path.exists(self.jar):
             return True
@@ -50,9 +47,7 @@ class Jar(object):
     def remove(self):
         """Remove the current jar file if it exists
 
-        - **parameters** and **return types**::
-
-            :return: True if jar file was removed, False otherwise
+        :return: True if jar file was removed, False otherwise
         """
         if self.exists():
             os.remove(self.jar)
@@ -60,12 +55,11 @@ class Jar(object):
         else:
             return False
 
-    def dump(self):
-        """Dumps all the pickles out of the jar (loading them to memory)
+    def dump(self, always_list=False):
+        """Dumps all the pickles out of the file/jar 
 
-        - **parameters** and **return types**::
-
-            :return: List of de-pickled objects
+        :param always_list: Ensure that Jars with single pickle return as a list (default = False)
+        :return: List of de-pickled objects
         """
         _pickles = []
         _jar = open(self.jar, 'rb')
@@ -76,30 +70,33 @@ class Jar(object):
                 break
         _jar.close()
         if len(_pickles) == 1:
-            if self.always_list:
+            if self.always_list or always_list:
                 return _pickles
             else:
                 return _pickles[0]
         else:
             return _pickles
 
-    def collect(self, pickles, newjar=False):
-        """Pickle an item or list of items to a file.
+    def collect(self, pickles, newjar=False, collapse=False):
+        """Pickle an item or list of items to a file/jar.
 
-        - **parameters** and **return types**::
-
-            :param pickles: Item or list of items to pickle
-            :param newjar: Start a new jar (default = False)
-            :return: True on file write
+        :param pickles: Item or list of items to pickle
+        :param newjar: Start a new jar (default = False)
+        :param collapse: If pickles is a list write list as single pickle
+        :return: True on file write
         """
         if newjar:
             _jar = open(self.jar, 'wb')
         else:
             _jar = open(self.jar, 'ab')
-        if type(pickles) is list:
-            for pkle in pickles:
-                dill.dump(pkle, _jar, dill.HIGHEST_PROTOCOL)
-        else:
+        if collapse:
             dill.dump(pickles, _jar, dill.HIGHEST_PROTOCOL)
+        else:
+            if type(pickles) is list:
+                for pkle in pickles:
+                    dill.dump(pkle, _jar, dill.HIGHEST_PROTOCOL)
+            else:
+                dill.dump(pickles, _jar, dill.HIGHEST_PROTOCOL)
         _jar.close()
         return True
+
