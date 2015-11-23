@@ -80,7 +80,7 @@ class TestPickleJar(unittest.TestCase):
         assert isinstance(self.pkls.dump(), (str, basestring))
         pass
 
-    def test_006_single_list(self):
+    def test_006_single_list_property(self):
         """ Return a single item from a Jar (in the test case a string) as a list with a single item (the string)
         :return: Jar.dump() is list
         """
@@ -90,7 +90,17 @@ class TestPickleJar(unittest.TestCase):
         assert isinstance(self.pkls.dump(), list)
         pass
 
-    def test_007_collapse(self):
+    def test_007_single_list(self):
+        """ Return a single item from a Jar (in the test case a string) as a list with a single item (the string)
+        :return: Jar.dump(always_list=True) is list
+        """
+        assert self.pkls.exists() is True
+        self.pkls.always_list = False
+        assert self.pkls.always_list is False
+        assert isinstance(self.pkls.dump(always_list=True), list)
+        pass
+
+    def test_008_collapse(self):
         """ Ensure a list of objects is written as a single pickle object
         :return: len(self.pkls.dump()) == 2
         """
@@ -100,7 +110,7 @@ class TestPickleJar(unittest.TestCase):
         assert len(self.pkls.dump()) == 2
         pass
 
-    def test_008_remove(self):
+    def test_009_remove(self):
         """ Clean up after all tests complete
         :return: Jar.remove is True
         """
