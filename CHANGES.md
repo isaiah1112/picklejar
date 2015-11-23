@@ -2,6 +2,7 @@
 
 # Version 1.3
  * Added *collapse* kwarg to Jar.collect() method for writing a list as a single pickle
+ * Added **always_list** kwarg to Jar.dump() method
 
 # Version 1.2
  * Added more path verification to \_\_init__ method

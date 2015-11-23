@@ -55,9 +55,10 @@ class Jar(object):
         else:
             return False
 
-    def dump(self):
+    def dump(self, always_list=False):
         """Dumps all the pickles out of the file/jar 
 
+        :param always_list: Ensure that Jars with single pickle return as a list (default = False)
         :return: List of de-pickled objects
         """
         _pickles = []
@@ -69,7 +70,7 @@ class Jar(object):
                 break
         _jar.close()
         if len(_pickles) == 1:
-            if self.always_list:
+            if self.always_list or always_list:
                 return _pickles
             else:
                 return _pickles[0]
