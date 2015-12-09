@@ -77,7 +77,7 @@ class TestPickleJar(unittest.TestCase):
         """
         assert self.pkls.exists() is True
         assert self.pkls.always_list is False
-        assert isinstance(self.pkls.dump(), (str, basestring))
+        assert isinstance(self.pkls.dump(), (str,))
         pass
 
     def test_006_single_list_property(self):
