@@ -55,7 +55,7 @@ class Jar(object):
         else:
             return False
 
-    def dump(self, always_list=False):
+    def load(self, always_list=False):
         """Dumps all the pickles out of the file/jar 
 
         :param always_list: Ensure that Jars with single pickle return as a list (default = False)
@@ -77,8 +77,8 @@ class Jar(object):
         else:
             return _pickles
 
-    def collect(self, pickles, newjar=False, collapse=False):
-        """Pickle an item or list of items to a file/jar.
+    def dump(self, pickles, newjar=False, collapse=False):
+        """Add a Pickle to the file/jar.
 
         :param pickles: Item or list of items to pickle
         :param newjar: Start a new jar (default = False)
