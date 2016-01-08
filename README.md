@@ -7,6 +7,10 @@
 [picklejar][] is released under the [GNU Lesser General Public License v3.0][],
 see the file LICENSE and LICESE.lesser for the license text.
 
+## Compatibility
+
+As of version 2.0, picklejar is compatible with Python 2.7 and 3.5!
+
 ## Installation
 
 The most straightforward way to get the picklejar module working for you is:

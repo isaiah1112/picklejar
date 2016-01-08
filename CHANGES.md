@@ -1,5 +1,9 @@
 # Changelog
 
+# Version 2.0
+ * Compatible with Python2.7 and 3.5
+ * Renamed Jar.dump to Jar.load and Jar.collect to Jar.dump to keep with normal pickle operations
+
 # Version 1.3
  * Added *collapse* kwarg to Jar.collect() method for writing a list as a single pickle
  * Added **always_list** kwarg to Jar.dump() method
