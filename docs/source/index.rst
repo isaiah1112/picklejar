@@ -9,3 +9,8 @@ PickleJar
 .. automodule:: picklejar
    :members:
    :private-members:
+
+Compatibility
+-------------
+
+As of version 2.0, Picklejar is compatible with Python 2.7 and 3.5!

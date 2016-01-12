@@ -5,7 +5,7 @@
 from setuptools import setup
 
 setup(name='picklejar',
-      version='1.3',
+      version='2.0',
       description='Read and write multiple pickles to a single file',
       author='Jesse Almanrode',
       author_email='jesse@almanrode.com',
@@ -23,6 +23,8 @@ setup(name='picklejar',
           'Programming Language :: Python',
           'Programming Language :: Python :: 2',
           'Programming Language :: Python :: 2.7',
+          'Programming Language :: Python :: 3',
+          'Programming Language :: Python :: 3.5',
           'Topic :: Software Development :: Libraries',
           'Topic :: Software Development :: Libraries :: Python Modules',
           ],
