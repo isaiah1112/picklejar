@@ -30,8 +30,7 @@ class Jar(object):
     :return: Jar object
     """
     def __init__(self, filepath, always_list=False):
-        filepath = os.path.abspath(os.path.expanduser(filepath))
-        self.jar = os.path.abspath(filepath)
+        self.jar = os.path.abspath(os.path.expanduser(filepath))
         self.always_list = always_list
 
     def exists(self):
@@ -39,10 +38,7 @@ class Jar(object):
 
         :return: True or False
         """
-        if os.path.exists(self.jar):
-            return True
-        else:
-            return False
+        return os.path.exists(self.jar)
 
     def remove(self):
         """Remove the current jar file if it exists
@@ -61,42 +57,40 @@ class Jar(object):
         :param always_list: Ensure that Jars with single pickle return as a list (default = False)
         :return: List of de-pickled objects
         """
-        _pickles = []
-        _jar = open(self.jar, 'rb')
-        while True:
-            try:
-                _pickles.append(dill.load(_jar))
-            except EOFError:
-                break
-        _jar.close()
-        if len(_pickles) == 1:
+        items = list()
+        with open(self.jar, 'rb') as jar:
+            while True:
+                try:
+                    items.append(dill.load(jar))
+                except EOFError:
+                    break
+        if len(items) == 1:
             if self.always_list or always_list:
-                return _pickles
+                return items
             else:
-                return _pickles[0]
+                return items[0]
         else:
-            return _pickles
+            return items
 
-    def dump(self, pickles, newjar=False, collapse=False):
+    def dump(self, items, newjar=False, collapse=False):
         """Write a Pickle to the file/jar.
 
-        :param pickles: Item or list of items to pickle
+        :param items: Item or list of items to pickle
         :param newjar: Start a new jar (default = False)
         :param collapse: If pickles is a list write list as single pickle
         :return: True on file write
         """
         if newjar:
-            _jar = open(self.jar, 'wb')
+            writemode = 'wb'
         else:
-            _jar = open(self.jar, 'ab')
-        if collapse:
-            dill.dump(pickles, _jar, dill.HIGHEST_PROTOCOL)
-        else:
-            if type(pickles) is list:
-                for pkle in pickles:
-                    dill.dump(pkle, _jar, dill.HIGHEST_PROTOCOL)
+            writemode = 'ab'
+        with open(self.jar, mode=writemode) as jar:
+            if collapse:
+                dill.dump(items, jar, dill.HIGHEST_PROTOCOL)
             else:
-                dill.dump(pickles, _jar, dill.HIGHEST_PROTOCOL)
-        _jar.close()
+                if type(items) is list:
+                    for item in items:
+                        dill.dump(item, jar, dill.HIGHEST_PROTOCOL)
+                else:
+                    dill.dump(items, jar, dill.HIGHEST_PROTOCOL)
         return True
-
