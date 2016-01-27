@@ -33,6 +33,12 @@ class Jar(object):
         self.jar = os.path.abspath(os.path.expanduser(filepath))
         self.always_list = always_list
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        return None
+
     def exists(self):
         """Does the Jar exist
 

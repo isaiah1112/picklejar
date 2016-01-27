@@ -1,5 +1,8 @@
 # Changelog
 
+# Version 2.0.2
+ * Added ability to use Jar class with Python 'with' statements
+
 # Version 2.0.1
  * Backend code improvements
 
