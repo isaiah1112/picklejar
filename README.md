@@ -25,7 +25,7 @@ This will ensure that all the requirements are met.
 
 ## Documentation
 
-All documentation for using picklejar can be at [JA Computing](http://pydoc.jacomputing.net/picklejar/)
+All documentation for using picklejar can be found at [JA Computing](http://pydoc.jacomputing.net/picklejar/)
 
 ## Contributing
 
