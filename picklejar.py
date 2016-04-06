@@ -83,7 +83,7 @@ class Jar(object):
 
         :param items: Item or list of items to pickle
         :param newjar: Start a new jar (default = False)
-        :param collapse: If pickles is a list write list as single pickle
+        :param collapse: If items is a list write list as single pickle
         :return: True on file write
         """
         if newjar:
