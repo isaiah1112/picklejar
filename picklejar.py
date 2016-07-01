@@ -26,7 +26,7 @@ class Jar(object):
     """A file containing multiple pickle objects
 
     :param filepath: Path to the file
-    :param always_list: Ensure that Jars with single pickle return as a list (default = False)
+    :param always_list: Ensure that Jars with single pickle return as a list
     :return: Jar object
     """
     def __init__(self, filepath, always_list=False):
@@ -58,7 +58,7 @@ class Jar(object):
     def load(self, always_list=False):
         """Loads all the pickles out of the file/jar
 
-        :param always_list: Ensure that Jars with single pickle return as a list (default = False)
+        :param always_list: Ensure that Jars with single pickle return as a list
         :return: List of de-pickled objects
         :raises: IOError if jar file doesn't exist
         """
@@ -83,7 +83,7 @@ class Jar(object):
         """Write a Pickle to the file/jar.
 
         :param items: Item or list of items to pickle
-        :param newjar: Start a new jar (default = False)
+        :param newjar: Start a new jar
         :param collapse: If items is a list write list as single pickle
         :return: True on file write
         """
