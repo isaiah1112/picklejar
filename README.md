@@ -23,6 +23,14 @@ or
 
 This will ensure that all the requirements are met.
 
+### Development Installation
+
+To install the packages required to build the Sphinx Documenation simply:
+
+> pip install -U -r requirements.txt
+
+This will install all the requirements to work on picklejar and build the docs!
+
 ## Documentation
 
 All documentation for using picklejar can be found at [JA Computing](http://pydoc.jacomputing.net/picklejar/)
@@ -38,7 +46,7 @@ tracker](https://bitbucket.org/isaiah1112/picklejar/issues?status=new&status=ope
 towards.
 
 Code contributions are encouraged: please feel free to [fork the
-project](https://bitbucket.org/isaiah1112/picklejar) and submit pull requests.
+project](https://bitbucket.org/isaiah1112/picklejar) and submit pull requests to the develop branch.
 
 
 [GNU Lesser General Public License v3.0]: http://choosealicense.com/licenses/lgpl-3.0/ "LGPL v3"
