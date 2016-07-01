@@ -49,21 +49,22 @@ class Jar(object):
     def remove(self):
         """Remove the current jar file if it exists
 
-        :return: True if jar file was removed, False otherwise
+        :return: True
         """
-        if self.exists():
+        if self.__exists():
             os.remove(self.jar)
-            return True
-        else:
-            return False
+        return True
 
     def load(self, always_list=False):
         """Loads all the pickles out of the file/jar
 
         :param always_list: Ensure that Jars with single pickle return as a list (default = False)
         :return: List of de-pickled objects
+        :raises: IOError if jar file doesn't exist
         """
         items = list()
+        if self.__exists() is False:
+            raise IOError('File does not exist: ' + self.jar)
         with open(self.jar, 'rb') as jar:
             while True:
                 try:
@@ -100,3 +101,10 @@ class Jar(object):
                 else:
                     dill.dump(items, jar, dill.HIGHEST_PROTOCOL)
         return True
+
+    # Protecting internal calls so picklejar can be subclassed
+    __exists = exists
+    __remove = remove
+    __load = load
+    __dump = dump
+
