@@ -6,6 +6,7 @@
 import os
 import sys
 import unittest
+import warnings
 try:
     import picklejar
 except ImportError:
@@ -27,6 +28,7 @@ class TestPickleJar(unittest.TestCase):
         """ Init a new Jar object
         :return: Jar Object
         """
+        global testloc
         self.pkls = picklejar.Jar(testloc)
         pass
 
@@ -104,13 +106,23 @@ class TestPickleJar(unittest.TestCase):
         """ Ensure a list of objects is written as a single pickle object
         :return: len(self.pkls.load()) == 2
         """
+        global test_list
         self.assertTrue(self.pkls.exists())
         self.assertTrue(self.pkls.dump(test_list, newjar=True, collapse=True))
         self.assertIsInstance(self.pkls.load(), list)
         self.assertEqual(len(self.pkls.load()), 2)
         pass
 
-    def test_009_remove(self):
+    def test_009_two_dimensional_list(self):
+        """ Test whether a pickled list is returned as a two-dimensional list if alwas_list == True
+        :return: len(self.pkls.load()) == 1 and len(self.pkls.load()[0]) == 2
+        """
+        self.assertTrue(self.pkls.exists())
+        self.assertEqual(len(self.pkls.load(always_list=True)), 1)
+        self.assertEqual(len(self.pkls.load(always_list=True)[0]), 2)
+        pass
+
+    def test_999_remove(self):
         """ Clean up after all tests complete
         :return: Jar.remove is True
         """
@@ -120,4 +132,5 @@ class TestPickleJar(unittest.TestCase):
         pass
 
 if __name__ == '__main__':
-    unittest.main()
+    with warnings.catch_warnings(record=True):
+        unittest.main()

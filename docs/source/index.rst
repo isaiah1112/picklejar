@@ -8,7 +8,6 @@ PickleJar
 
 .. automodule:: picklejar
    :members:
-   :private-members:
 
 Compatibility
 -------------
