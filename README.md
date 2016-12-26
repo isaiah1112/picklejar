@@ -31,6 +31,23 @@ To install the packages required to build the Sphinx Documenation simply:
 
 This will install all the requirements to work on picklejar and build the docs!
 
+### Automated Testing
+
+Picklejar uses [Tox] to support automated testing across multiple versions of Python.  To run the tox tests after installing
+the `requirements.txt` file, run:
+
+> tox
+
+At the time of this writing, we are testing the following versions of Python:
+
+* Python2.6
+* Python2.7
+* Python3.5
+* Python3.6
+* PyPY 5.6.0
+
+**NOTE:** You must have the versions of Python installed that you wish to test against or your tox will fail!
+
 ## Documentation
 
 All documentation for using picklejar can be found at [JA Computing](http://pydoc.jacomputing.net/picklejar/)
@@ -52,3 +69,5 @@ project](https://bitbucket.org/isaiah1112/picklejar) and submit pull requests to
 [GNU Lesser General Public License v3.0]: http://choosealicense.com/licenses/lgpl-3.0/ "LGPL v3"
 
 [picklejar]: https://bitbucket.org/isaiah1112/picklejar "picklejar Module"
+
+[tox]: https://tox.readthedocs.io/en/latest/index.html
