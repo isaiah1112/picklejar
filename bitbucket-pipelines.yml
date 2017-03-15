@@ -1,9 +1,8 @@
 image: python:3.6
 
 pipelines:
-  branches:
-    develop:
-      - step:
-          script:
-            - pip install -U tox
-            - tox -e py36
+  default:
+    - step:
+        script:
+          - pip install -U tox
+          - tox -e py36
