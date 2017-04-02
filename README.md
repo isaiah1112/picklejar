@@ -49,7 +49,7 @@ At the time of this writing, we are testing the following versions of Python:
 
 ## Documentation
 
-All documentation for using picklejar can be found at [JA Computing](http://pydoc.jacomputing.net/picklejar/)
+All documentation for using picklejar can be found at https://pythonhosted.org/picklejar/
 
 ## Contributing
 
