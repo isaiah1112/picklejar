@@ -1,8 +1,7 @@
 # coding=utf-8
-"""PickleJar is a python module that allows you to work with multiple pickles while reading/writing 
-them to a single file/jar.
+"""PickleJar is a python module that allows you to work with multiple pickles inside a sigle file (I call it a "jar")!
 """
-# Copyright (C) 2015 Jesse Almanrode
+# Copyright (C) 2015-2017 Jesse Almanrode
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU Lesser General Public License as published by
@@ -102,9 +101,8 @@ class Jar(object):
                     dill.dump(items, jar, dill.HIGHEST_PROTOCOL)
         return True
 
-    # Protecting internal calls so picklejar can be subclassed
+    # Protecting internal calls
     __exists = exists
     __remove = remove
     __load = load
     __dump = dump
-

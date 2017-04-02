@@ -1,5 +1,11 @@
 # Changelog
 
+## Release v2.0.4
+ * Using tox for automated testing.  Support for Python2.6 and Python3.5 verified. [d4427b8]
+ * bitbucket-pipelines.yml created online with Bitbucket [9c3d0dd]
+ * Updated version info, requirements, and compatibility matrixes! [37e06c4]
+ * Updated some comments [458b2ca]
+
 ## Release v2.0.3
  * Privatizing internal function calls.  Checking for existence of Jar file before loading jar.
  * Testing for multi-dimensional list if pickled list is loaded with alwas_list=True

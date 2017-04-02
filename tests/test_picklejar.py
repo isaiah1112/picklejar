@@ -62,7 +62,7 @@ class TestPickleJar(unittest.TestCase):
         :return: Jar.load() is list
         """
         self.assertTrue(self.pkls.exists())
-        self.assertIsInstance(self.pkls.load(), list)
+        self.assertTrue(isinstance(self.pkls.load(), list))
         pass
 
     def test_004_start(self):
@@ -79,7 +79,7 @@ class TestPickleJar(unittest.TestCase):
         """
         self.assertTrue(self.pkls.exists())
         self.assertFalse(self.pkls.always_list)
-        self.assertIsInstance(self.pkls.load(), str)
+        self.assertTrue(isinstance(self.pkls.load(), str))
         pass
 
     def test_006_single_list_property(self):
@@ -89,7 +89,7 @@ class TestPickleJar(unittest.TestCase):
         self.assertTrue(self.pkls.exists())
         self.pkls.always_list = True
         self.assertTrue(self.pkls.always_list)
-        self.assertIsInstance(self.pkls.load(), list)
+        self.assertTrue(isinstance(self.pkls.load(), list))
         pass
 
     def test_007_single_list(self):
@@ -99,7 +99,7 @@ class TestPickleJar(unittest.TestCase):
         self.assertTrue(self.pkls.exists())
         self.pkls.always_list = False
         self.assertFalse(self.pkls.always_list)
-        self.assertIsInstance(self.pkls.load(always_list=True), list)
+        self.assertTrue(isinstance(self.pkls.load(always_list=True), list))
         pass
 
     def test_008_collapse(self):
@@ -109,7 +109,7 @@ class TestPickleJar(unittest.TestCase):
         global test_list
         self.assertTrue(self.pkls.exists())
         self.assertTrue(self.pkls.dump(test_list, newjar=True, collapse=True))
-        self.assertIsInstance(self.pkls.load(), list)
+        self.assertTrue(isinstance(self.pkls.load(), list))
         self.assertEqual(len(self.pkls.load()), 2)
         pass
 
