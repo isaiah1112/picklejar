@@ -90,7 +90,7 @@ class Jar(object):
             writemode = 'wb'
         else:
             writemode = 'ab'
-        with open(self.jar, mode=writemode) as jar:
+        with open(self.jar, writemode) as jar:
             if collapse:
                 dill.dump(items, jar, dill.HIGHEST_PROTOCOL)
             else:
