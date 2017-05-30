@@ -1,5 +1,12 @@
 # Changelog
 
+## Release v2.0.5
+ * Updating unittests to start using mock module. [39a6593]
+ * Setting up documentation tox environment [168a079]
+ * Reconfiguring bitbucket pipelines for deployment on push of master branch. [f1995ff]
+ * Trimming down requirements for tox. [fbf3521]
+ * Fixing deploy.bash so it works to publish to PyPi [447eeba]
+
 ## Release v2.0.4
  * Using tox for automated testing.  Support for Python2.6 and Python3.5 verified. [d4427b8]
  * bitbucket-pipelines.yml created online with Bitbucket [9c3d0dd]
