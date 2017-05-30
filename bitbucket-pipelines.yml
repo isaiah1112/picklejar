@@ -6,3 +6,10 @@ pipelines:
           script:
             - pip install -U tox
             - tox -e py36
+  branches:
+    master:
+      - step:
+          script:
+            - pip install -U tox
+            - tox -e py36
+            - bash -e deploy.bash
