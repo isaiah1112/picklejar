@@ -5,14 +5,14 @@
 from setuptools import setup
 
 setup(name='picklejar',
-      version='2.0.5',
+      version='2.0.6',
       description='Read and write pickles to a single file',
       author='Jesse Almanrode',
       author_email='jesse@almanrode.com',
       url='https://pythonhosted.org/picklejar/',
       py_modules=['picklejar'],
       license='GNU Lesser General Public License v3 or later (LGPLv3+)',
-      install_requires=['dill==0.2.6',
+      install_requires=['dill==0.2.7',
                         ],
       platforms='any',
       classifiers=[

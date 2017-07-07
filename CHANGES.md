@@ -1,5 +1,8 @@
 # Changelog
 
+## Release v2.0.6
+ * Updating requirements (new version of dill is available) [1498c9c]
+
 ## Release v2.0.5
  * Updating unittests to start using mock module. [39a6593]
  * Setting up documentation tox environment [168a079]
