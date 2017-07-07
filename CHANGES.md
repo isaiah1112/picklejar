@@ -1,5 +1,8 @@
 # Changelog
 
+## Release v2.0.7
+ * Updated documentation URL [0a06c46]
+
 ## Release v2.0.6
  * Updating requirements (new version of dill is available) [1498c9c]
 
