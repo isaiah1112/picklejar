@@ -3,13 +3,30 @@ image: python:3.6
 pipelines:
   default:
       - step:
+          name: Python 2 Tests
+          image: python:2.7
+          script:
+            - pip install -U tox
+            - tox -e py27
+      - step:
+          name: Python3 Tests
           script:
             - pip install -U tox
             - tox -e py36
   branches:
     master:
       - step:
+          name: Python 2 Tests
+          image: python:2.7
+          script:
+            - pip install -U tox
+            - tox -e py27
+      - step:
+          name: Python3 Tests
           script:
             - pip install -U tox
             - tox -e py36
+      - step:
+          name: Deploy To PyPi
+          script:
             - bash -e deploy.bash
