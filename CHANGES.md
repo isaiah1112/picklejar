@@ -1,5 +1,11 @@
 # Changelog
 
+## Release release/v2.0.9
+ * Updated version and requirements [ded32d1]
+
+## Release v2.0.8
+ * Updated requirements [af55801]
+
 ## Release v2.0.7
  * Updated documentation URL [0a06c46]
 
