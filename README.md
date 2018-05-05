@@ -41,7 +41,6 @@ the `requirements.txt` file, run:
 At the time of this writing, we are testing the following versions of Python:
 
 * Python2.7
-* Python3.5
 * Python3.6
 * PyPY 5.7.0
 
