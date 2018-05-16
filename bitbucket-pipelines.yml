@@ -8,11 +8,23 @@ pipelines:
           script:
             - pip install -U tox
             - tox -e py27
+          caches:
+            - pip
+      - step:
+          name: Pypy Tests
+          image: pypy:latest
+          script:
+            - pip install -U tox
+            - tox -e pypy
+          caches:
+            - pip
       - step:
           name: Python3 Tests
           script:
             - pip install -U tox
             - tox -e py36
+          caches:
+            - pip
   branches:
     master:
       - step:
@@ -21,11 +33,30 @@ pipelines:
           script:
             - pip install -U tox
             - tox -e py27
+          caches:
+            - pip
+      - step:
+          name: Pypy Tests
+          image: pypy:latest
+          script:
+            - pip install -U tox
+            - tox -e pypy
+          caches:
+            - pip
       - step:
           name: Python3 Tests
           script:
             - pip install -U tox
             - tox -e py36
+          caches:
+            - pip
+      - step:
+          name: Documentation
+          script:
+            - pip install -U tox
+            - tox -e docs
+          caches:
+            - pip
       - step:
           name: Deploy To PyPi
           script:
