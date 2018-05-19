@@ -37,10 +37,10 @@ pipelines:
             - pip
       - step:
           name: Pypy Tests
-          image: pypy:latest
+          image: pypy:3
           script:
             - pip install -U tox
-            - tox -e pypy
+            - tox -e pypy3
           caches:
             - pip
       - step:
