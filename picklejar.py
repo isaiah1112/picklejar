@@ -1,5 +1,5 @@
 # coding=utf-8
-"""PickleJar is a python module that allows you to work with multiple pickles inside a sigle file (I call it a "jar")!
+"""PickleJar is a python module that allows you to work with multiple pickles inside a single file (I call it a "jar")!
 """
 # Copyright (C) 2015-2018 Jesse Almanrode
 #

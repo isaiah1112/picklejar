@@ -9,7 +9,7 @@ see the file LICENSE and LICESE.lesser for the license text.
 
 ## Compatibility
 
-As of version 2.0, picklejar is compatible with the latest versions of Python2 and Python3!
+As of version 2.0, picklejar is compatible with the latest versions of Python2, Python3, and PyPy3!
 
 ## Installation
 
@@ -42,7 +42,8 @@ At the time of this writing, we are testing the following versions of Python:
 
 * Python2.7
 * Python3.6
-* PyPY 5.7.0
+* Python3.7
+* PyPy3
 
 **NOTE:** You must have the versions of Python installed that you wish to test against or your tox will fail!
 
