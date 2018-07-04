@@ -1,6 +1,15 @@
 # Changelog
 
-## Release release/v2.0.9
+## Release v2.0.10
+ * Fixing typo [abb6260]
+ * Adding pypy to Bitbucket-pipelines.yml [fe61b23]
+ * Fixing BitBucket Pipelines for PyPy tests [57a9f02]
+ * Gotta make sure the production pipeline is updated too! [0ebe8f1]
+ * Testing build against Python 3.7 [062f14f]
+ * Re-ordering tests [d1f84c1]
+ * Updating requirements and bumping version [e1e2784]
+
+## Release v2.0.9
  * Updated version and requirements [ded32d1]
 
 ## Release v2.0.8
