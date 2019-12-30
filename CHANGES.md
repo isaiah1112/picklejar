@@ -1,5 +1,8 @@
 # Changelog
 
+## Release v2.1.1
+ * Added Python3.8 support [c489127]
+
 ## Release v2.1
  * Adding Python3.4 and Python3.5 to testing [98efc97]
  * Updated requirements [50203d3]
