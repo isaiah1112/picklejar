@@ -11,35 +11,11 @@ pipelines:
           caches:
             - pip
       - step:
-          name: Python 3.4 Tests
-          image: python:3.4
+          name: Python 3.8 Tests
+          image: python:3.8
           script:
             - pip install -U tox
-            - tox -e py34
-          caches:
-            - pip
-      - step:
-          name: Python 3.5 Tests
-          image: python:3.5
-          script:
-            - pip install -U tox
-            - tox -e py35
-          caches:
-            - pip
-      - step:
-          name: Python 3.6 Tests
-          image: python:3.6
-          script:
-            - pip install -U tox
-            - tox -e py36
-          caches:
-            - pip
-      - step:
-          name: Python 3.7 Tests
-          image: python:3.7
-          script:
-            - pip install -U tox
-            - tox -e py37
+            - tox -e py38
           caches:
             - pip
       - step:
@@ -90,6 +66,14 @@ pipelines:
           script:
             - pip install -U tox
             - tox -e py37
+          caches:
+            - pip
+      - step:
+          name: Python 3.8 Tests
+          image: python:3.8
+          script:
+            - pip install -U tox
+            - tox -e py38
           caches:
             - pip
       - step:
