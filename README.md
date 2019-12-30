@@ -45,6 +45,7 @@ At the time of this writing, we are testing the following versions of Python:
 * Python3.5
 * Python3.6
 * Python3.7
+* Python3.8
 * PyPy3
 
 **NOTE:** You must have the versions of Python installed that you wish to test against or your tox will fail!
