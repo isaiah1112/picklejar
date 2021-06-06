@@ -1,5 +1,9 @@
 # Changelog
 
+## Release v2.1.2
+ * Added Python3.9 support [59bd072]
+ * Added twine to pip deployment process [2031b72]
+
 ## Release v2.1.1
  * Added Python3.8 support [c489127]
 

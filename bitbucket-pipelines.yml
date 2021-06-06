@@ -11,11 +11,11 @@ pipelines:
           caches:
             - pip
       - step:
-          name: Python 3.8 Tests
-          image: python:3.8
+          name: Python 3.9 Tests
+          image: python:3.9
           script:
             - pip install -U tox
-            - tox -e py38
+            - tox -e py39
           caches:
             - pip
       - step:
@@ -77,6 +77,14 @@ pipelines:
           caches:
             - pip
       - step:
+          name: Python 3.9 Tests
+          image: python:3.9
+          script:
+            - pip install -U tox
+            - tox -e py39
+          caches:
+            - pip
+      - step:
           name: Pypy 3 Tests
           image: pypy:3
           script:
@@ -94,4 +102,5 @@ pipelines:
       - step:
           name: Deploy To PyPi
           script:
+            - pip install twine
             - bash -e deploy.bash
