@@ -102,4 +102,5 @@ pipelines:
       - step:
           name: Deploy To PyPi
           script:
+            - pip install twine
             - bash -e deploy.bash
