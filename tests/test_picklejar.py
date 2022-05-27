@@ -4,16 +4,9 @@
 """
 
 import mock
-import os
-import sys
+import picklejar
 import unittest
 import warnings
-try:
-    import picklejar
-except ImportError:
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.append(project_root)
-    import picklejar
 
 __author__ = 'Jesse Almanrode (jesse@almanrode.com)'
 
@@ -112,6 +105,7 @@ class TestPickleJar(unittest.TestCase):
         mock_os.remove.return_value = True
         self.assertTrue(self.pkls.remove())
         pass
+
 
 if __name__ == '__main__':
     with warnings.catch_warnings(record=True):
