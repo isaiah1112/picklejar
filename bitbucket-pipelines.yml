@@ -50,6 +50,13 @@ pipelines:
       - step: *py310
       - step: *pypy3
       - step:
+          name: Build Documentation
+          script:
+            - python -m pip install Sphinx
+            - sphinx-build -b html docs/source/ docs/build/html/
+          caches:
+            - pip
+      - step:
           name: Deploy To Test PyPi
           trigger: manual
           script:
@@ -62,13 +69,6 @@ pipelines:
       - step: *py39
       - step: *py310
       - step: *pypy3
-      - step:
-          name: Build Documentation
-          script:
-            - python -m pip install Sphinx
-            - sphinx-build -b html docs/source/ docs/build/html/ && open docs/build/html/index.html
-          caches:
-            - pip
       - step:
           name: Deploy To PyPi
           script:
