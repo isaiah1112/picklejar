@@ -1,7 +1,7 @@
 # coding=utf-8
 """PickleJar is a python module that allows you to work with multiple pickles inside a single file (I call it a "jar")!
 """
-# Copyright (C) 2015-2021 Jesse Almanrode
+# Copyright (C) 2015-2022 Jesse Almanrode
 #
 #     This program is free software: you can redistribute it and/or modify
 #     it under the terms of the GNU Lesser General Public License as published by
@@ -19,18 +19,19 @@
 # Imports
 import os
 import dill
+from typing import Any
 
 
-class Jar(object):
+class Jar:
     """A file containing multiple pickle objects
 
     :param filepath: Path to the file
-    :param always_list: Ensure that Jars with single pickle return as a list
-    :return: Jar object
+    :type filepath: str, required
+    :return: None
+    :rtype: None
     """
-    def __init__(self, filepath, always_list=False):
+    def __init__(self, filepath: str) -> None:
         self.jar = os.path.abspath(os.path.expanduser(filepath))
-        self.always_list = always_list
 
     def __enter__(self):
         return self
@@ -38,28 +39,32 @@ class Jar(object):
     def __exit__(self, exc_type, exc_val, exc_tb):
         return None
 
-    def exists(self):
+    def exists(self) -> bool:
         """Does the Jar exist
 
         :return: True or False
+        :rtype: bool
         """
         return os.path.exists(self.jar)
 
-    def remove(self):
+    def remove(self) -> bool:
         """Remove the current jar file if it exists
 
         :return: True
+        :rtype: bool
         """
         if self.__exists():
             os.remove(self.jar)
         return True
 
-    def load(self, always_list=False):
+    def load(self, always_list: bool = False) -> Any:
         """Loads all the pickles out of the file/jar
 
-        :param always_list: Ensure that Jars with single pickle return as a list
-        :return: List of de-pickled objects
-        :raises: IOError if jar file doesn't exist
+        :param always_list: Ensure that Jars with single pickle return as a list (Default: False)
+        :type always_list: bool, optional
+        :return: List of de-pickled objects or de-pickled object if always_list is False and pickled object is not list
+        :rtype: Any
+        :raises: IOError
         """
         items = list()
         if self.__exists() is False:
@@ -71,22 +76,25 @@ class Jar(object):
                 except EOFError:
                     break
         if len(items) == 1:
-            if self.always_list or always_list:
+            if always_list:
                 return items
             else:
                 return items[0]
         else:
             return items
 
-    def dump(self, items, newjar=False, collapse=False):
+    def dump(self, items: Any, new_jar: bool = False, collapse: bool = False) -> bool:
         """Write a Pickle to the file/jar.
 
         :param items: Item or list of items to pickle
-        :param newjar: Start a new jar
+        :type items: Any
+        :param new_jar: Start a new jar (Default: False)
+        :type new_jar: bool, optional
         :param collapse: If items is a list write list as single pickle
         :return: True on file write
+        :rtype: bool
         """
-        if newjar:
+        if new_jar:
             writemode = 'wb'
         else:
             writemode = 'ab'

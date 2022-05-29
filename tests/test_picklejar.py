@@ -4,16 +4,9 @@
 """
 
 import mock
-import os
-import sys
+import picklejar
 import unittest
 import warnings
-try:
-    import picklejar
-except ImportError:
-    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sys.path.append(project_root)
-    import picklejar
 
 __author__ = 'Jesse Almanrode (jesse@almanrode.com)'
 
@@ -32,6 +25,8 @@ class TestPickleJar(unittest.TestCase):
         """
         mock_path.exists.return_value = False
         self.assertFalse(self.pkls.exists())
+        with self.assertRaises(IOError):
+            self.pkls.load()
         mock_path.exists.return_value = True
         self.assertTrue(self.pkls.exists())
         pass
@@ -57,42 +52,39 @@ class TestPickleJar(unittest.TestCase):
         """ Overwrite an existing Jar file
         """
         with mock.patch('picklejar.open', mock.mock_open(), create=True):
-            self.assertTrue(self.pkls.dump('test string', newjar=True))
+            self.assertTrue(self.pkls.dump('test string', new_jar=True))
         pass
 
     @mock.patch('picklejar.os.path')
     def test_single(self, mock_path):
         """ Return a single item from a Jar (in the test case a string) as the original type (a string)
         """
-        self.assertFalse(self.pkls.always_list)
         mock_path.exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True):
             with mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
-                self.assertTrue(isinstance(self.pkls.load(), str))
+                self.assertTrue(isinstance(self.pkls.load(always_list=False), str))
         pass
 
     @mock.patch('picklejar.os.path')
     def test_single_list(self, mock_path):
         """ Return a single item from a Jar (in the test case a string) as a list with a single item (the string)
         """
-        self.pkls.always_list = True
-        self.assertTrue(self.pkls.always_list)
         mock_path.exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True):
             with mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
-                self.assertTrue(isinstance(self.pkls.load(), list))
+                self.assertTrue(isinstance(self.pkls.load(always_list=True), list))
         pass
 
     def test_collapse(self):
         """ Ensure a list of objects is written as a single pickle object
         """
         with mock.patch('picklejar.open', mock.mock_open(), create=True):
-            self.assertTrue(self.pkls.dump([1, 2, 3], newjar=True, collapse=True))
+            self.assertTrue(self.pkls.dump([1, 2, 3], new_jar=True, collapse=True))
         pass
 
     @mock.patch('picklejar.os.path')
     def test_multi_dimensional_list(self, mock_path):
-        """ Test whether a pickled list is returned as a two-dimensional list if alwas_list == True
+        """ Test whether a pickled list is returned as a two-dimensional list if always_list == True
         """
         mock_path.exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(), create=True):
@@ -112,6 +104,7 @@ class TestPickleJar(unittest.TestCase):
         mock_os.remove.return_value = True
         self.assertTrue(self.pkls.remove())
         pass
+
 
 if __name__ == '__main__':
     with warnings.catch_warnings(record=True):
