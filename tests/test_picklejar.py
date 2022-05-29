@@ -25,6 +25,8 @@ class TestPickleJar(unittest.TestCase):
         """
         mock_path.exists.return_value = False
         self.assertFalse(self.pkls.exists())
+        with self.assertRaises(IOError):
+            self.pkls.load()
         mock_path.exists.return_value = True
         self.assertTrue(self.pkls.exists())
         pass
