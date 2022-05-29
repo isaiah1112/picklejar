@@ -30,8 +30,11 @@ To install the packages required and build the Sphinx Documentation simply:
 make docs
 ```
 
-This will install all the requirements to work on picklejar, build the docs, and then open the HTML in your default
-browser!
+This will install all the requirements to work on picklejar and then build the HTML documentation.
+To open the docs in your default browser, simply run:
+```commandline
+open docs/build/html/index.html
+```
 
 # Contributing
 Comments and enhancements are very welcome. To install [picklejar] for development purposes run:
