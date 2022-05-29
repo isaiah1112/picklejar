@@ -50,7 +50,7 @@ class TestPickleJar(unittest.TestCase):
         """ Overwrite an existing Jar file
         """
         with mock.patch('picklejar.open', mock.mock_open(), create=True):
-            self.assertTrue(self.pkls.dump('test string', newjar=True))
+            self.assertTrue(self.pkls.dump('test string', new_jar=True))
         pass
 
     @mock.patch('picklejar.os.path')
@@ -77,7 +77,7 @@ class TestPickleJar(unittest.TestCase):
         """ Ensure a list of objects is written as a single pickle object
         """
         with mock.patch('picklejar.open', mock.mock_open(), create=True):
-            self.assertTrue(self.pkls.dump([1, 2, 3], newjar=True, collapse=True))
+            self.assertTrue(self.pkls.dump([1, 2, 3], new_jar=True, collapse=True))
         pass
 
     @mock.patch('picklejar.os.path')

@@ -85,18 +85,18 @@ class Jar:
         else:
             return items
 
-    def dump(self, items, newjar: bool = False, collapse: bool = False) -> bool:
+    def dump(self, items, new_jar: bool = False, collapse: bool = False) -> bool:
         """Write a Pickle to the file/jar.
 
         :param items: Item or list of items to pickle (Default: False)
         :type items: bool, optional
-        :param newjar: Start a new jar (Default: False)
-        :type newjar: bool, optional
+        :param new_jar: Start a new jar (Default: False)
+        :type new_jar: bool, optional
         :param collapse: If items is a list write list as single pickle
         :return: True on file write
         :rtype: bool
         """
-        if newjar:
+        if new_jar:
             writemode = 'wb'
         else:
             writemode = 'ab'
