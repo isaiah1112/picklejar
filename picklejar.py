@@ -32,9 +32,8 @@ class Jar(object):
     :return: None
     :rtype: None
     """
-    def __init__(self, filepath: str, always_list: bool = False) -> None:
+    def __init__(self, filepath: str) -> None:
         self.jar = os.path.abspath(os.path.expanduser(filepath))
-        self.always_list = always_list
 
     def __enter__(self):
         return self
@@ -79,7 +78,7 @@ class Jar(object):
                 except EOFError:
                     break
         if len(items) == 1:
-            if self.always_list or always_list:
+            if always_list:
                 return items
             else:
                 return items[0]
