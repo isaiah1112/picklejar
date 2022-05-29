@@ -64,7 +64,7 @@ class Jar:
         :type always_list: bool, optional
         :return: List of de-pickled objects or de-pickled object if always_list is False and pickled object is not list
         :rtype: Any
-        :raises: IOError if jar file doesn't exist
+        :raises: IOError
         """
         items = list()
         if self.__exists() is False:
@@ -83,11 +83,11 @@ class Jar:
         else:
             return items
 
-    def dump(self, items, new_jar: bool = False, collapse: bool = False) -> bool:
+    def dump(self, items: Any, new_jar: bool = False, collapse: bool = False) -> bool:
         """Write a Pickle to the file/jar.
 
-        :param items: Item or list of items to pickle (Default: False)
-        :type items: bool, optional
+        :param items: Item or list of items to pickle
+        :type items: Any
         :param new_jar: Start a new jar (Default: False)
         :type new_jar: bool, optional
         :param collapse: If items is a list write list as single pickle
