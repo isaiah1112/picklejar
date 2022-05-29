@@ -57,23 +57,20 @@ class TestPickleJar(unittest.TestCase):
     def test_single(self, mock_path):
         """ Return a single item from a Jar (in the test case a string) as the original type (a string)
         """
-        self.assertFalse(self.pkls.always_list)
         mock_path.exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True):
             with mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
-                self.assertTrue(isinstance(self.pkls.load(), str))
+                self.assertTrue(isinstance(self.pkls.load(always_list=False), str))
         pass
 
     @mock.patch('picklejar.os.path')
     def test_single_list(self, mock_path):
         """ Return a single item from a Jar (in the test case a string) as a list with a single item (the string)
         """
-        self.pkls.always_list = True
-        self.assertTrue(self.pkls.always_list)
         mock_path.exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True):
             with mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
-                self.assertTrue(isinstance(self.pkls.load(), list))
+                self.assertTrue(isinstance(self.pkls.load(always_list=True), list))
         pass
 
     def test_collapse(self):
@@ -85,7 +82,7 @@ class TestPickleJar(unittest.TestCase):
 
     @mock.patch('picklejar.os.path')
     def test_multi_dimensional_list(self, mock_path):
-        """ Test whether a pickled list is returned as a two-dimensional list if alwas_list == True
+        """ Test whether a pickled list is returned as a two-dimensional list if always_list == True
         """
         mock_path.exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(), create=True):
