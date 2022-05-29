@@ -12,4 +12,5 @@ PickleJar
 Compatibility
 -------------
 
-As of version 2.0, Picklejar is compatible with the latest versions of Python2, Python3, and PyPy!
+As of version 3.0.0, Picklejar is compatible with the latest versions of Python3, and PyPy! If you are looking
+to use :code:`picklejar` with Python2.7 or 3.0 to 3.6, please use version :code:`picklejar version 2.1.2`!

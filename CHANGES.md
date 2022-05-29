@@ -1,5 +1,21 @@
 # Changelog
 
+## Release v3.0.0
+ * Adding Python3.10 to testing [a56ed8a]
+ * Updated requirements [e89c737]
+ * Reconfigured Bitbucket Pipelines to not use tox [ef55ad9]
+ * Dropping Python2.7 in addition to Python3.6 [215c267]
+ * Added Makefile for common actions [db7946c]
+ * Updated setup.py file to pull in README, set python_requires, etc. [69d4e3c]
+ * Removed localized imports of module for test_picklejar.py [56ca5ee]
+ * Added typing hints to picklejar [fa088e4]
+ * Removed always_list property in favor of kwarg when using load [8adeb5f]
+ * Using new class definition style [cba6b22]
+ * Updated unittests for picklejar [dffe71d]
+ * Renamed newjar kwarg to new_jar [acad7e4]
+ * Removing docs for always_list in Jar object. [fe69b96]
+
+
 ## Release v2.1.2
  * Added Python3.9 support [59bd072]
  * Added twine to pip deployment process [2031b72]
