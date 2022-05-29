@@ -27,8 +27,6 @@ class Jar:
 
     :param filepath: Path to the file
     :type filepath: str, required
-    :param always_list: Ensure that Jars with single pickle return as a list (Default: False)
-    :type always_list: bool, optional
     :return: None
     :rtype: None
     """
@@ -59,13 +57,13 @@ class Jar:
             os.remove(self.jar)
         return True
 
-    def load(self, always_list: bool = False) -> list:
+    def load(self, always_list: bool = False) -> Any:
         """Loads all the pickles out of the file/jar
 
         :param always_list: Ensure that Jars with single pickle return as a list (Default: False)
         :type always_list: bool, optional
-        :return: List of de-pickled objects
-        :rtype: list
+        :return: List of de-pickled objects or de-pickled object if always_list is False and pickled object is not list
+        :rtype: Any
         :raises: IOError if jar file doesn't exist
         """
         items = list()
