@@ -22,7 +22,7 @@ import dill
 from typing import Any
 
 
-class Jar(object):
+class Jar:
     """A file containing multiple pickle objects
 
     :param filepath: Path to the file
