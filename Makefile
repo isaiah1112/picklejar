@@ -2,7 +2,7 @@
 
 docs:
 	@python -m pip install Sphinx
-	@sphinx-build -b html docs/source/ docs/build/html/ && open docs/build/html/index.html
+	@sphinx-build -b html docs/source/ docs/build/html/
 
 install:
 	@python -m pip install -U -e .
