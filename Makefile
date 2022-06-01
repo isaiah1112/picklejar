@@ -1,4 +1,6 @@
-.PHONY: docs install test test-coverage test-init
+.PHONY: docker-test-all docker-test-latest docker-test-py37 docker-test-py38 docker-test-py39 docker-test-py310 docs install test test-coverage test-init
+
+PYTHON_VERSION = "3.10"
 
 docs:
 	@python -m pip install Sphinx
@@ -11,7 +13,35 @@ test: test-init
 	@coverage run -m unittest discover tests/
 
 test-coverage: test
-	@coverage html && open htmlcov/index.html
+	@coverage html
 
 test-init:
 	@python -m pip install -U -r requirements.txt
+
+docker-test-all: docker-test-py37 docker-test-py38 docker-test-py39 docker-test-latest
+
+docker-test-latest: docker-test-py310
+
+docker-test-py37: PYTHON_VERSION = "3.7"
+docker-test-py37:
+	@echo "Testing Python:$(PYTHON_VERSION)"
+	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
+		sh -c 'python -m pip install -U -r ./requirements.txt && python -m unittest discover ./tests/'
+
+docker-test-py38: PYTHON_VERSION = "3.8"
+docker-test-py38:
+	@echo "Testing Python:$(PYTHON_VERSION)"
+	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
+		sh -c 'python -m pip install -U -r ./requirements.txt && python -m unittest discover ./tests/'
+
+docker-test-py39: PYTHON_VERSION = "3.9"
+docker-test-py39:
+	@echo "Testing Python:$(PYTHON_VERSION)"
+	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
+		sh -c 'python -m pip install -U -r ./requirements.txt && python -m unittest discover ./tests/'
+
+docker-test-py310: PYTHON_VERSION = "3.10"
+docker-test-py310:
+	@echo "Testing Python:$(PYTHON_VERSION)"
+	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
+		sh -c 'python -m pip install -U -r ./requirements.txt && python -m unittest discover ./tests/'
