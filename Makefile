@@ -1,4 +1,4 @@
-.PHONY: docker-test-all docker-test-latest docker-test-py37 docker-test-py38 docker-test-py39 docker-test-py310 docs install test test-coverage test-init
+.PHONY: docker-test-all docker-test-latest docker-test-py37 docker-test-py38 docker-test-py39 docker-test-py310 docs install test test-coverage test-init test-lint
 
 PYTHON_VERSION = "3.10"
 
@@ -9,7 +9,7 @@ docs:
 install:
 	@python -m pip install -U -e .
 
-test: test-init
+test: test-lint
 	@coverage run -m unittest discover tests/
 
 test-coverage: test
@@ -17,6 +17,10 @@ test-coverage: test
 
 test-init:
 	@python -m pip install -U -r requirements.txt
+
+test-lint: test-init
+	@flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
+	@flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
 
 docker-test-all: docker-test-py37 docker-test-py38 docker-test-py39 docker-test-latest
 
