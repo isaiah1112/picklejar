@@ -34,6 +34,14 @@ pipelines:
             - coverage run -m unittest discover tests/
           caches:
             - pip
+      - step: &py311
+          name: Python 3.11 Tests
+          image: python:3.11.0rc2
+          script:
+            - python -m pip install -U -r requirements.txt
+            - coverage run -m unittest discover tests/
+          caches:
+            - pip
       - step: &pypy3
           name: Pypy 3 Tests
           image: pypy:3
@@ -48,6 +56,7 @@ pipelines:
       - step: *py38
       - step: *py39
       - step: *py310
+      - step: *py311
       - step: *pypy3
       - step:
           name: Lint using Flake8
@@ -74,6 +83,7 @@ pipelines:
       - step: *py38
       - step: *py39
       - step: *py310
+      - step: *py311
       - step: *pypy3
       - step:
           name: Deploy To PyPi

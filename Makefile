@@ -1,4 +1,4 @@
-.PHONY: docker-test-all docker-test-latest docker-test-py37 docker-test-py38 docker-test-py39 docker-test-py310 docs install test test-coverage test-init test-lint
+.PHONY: docker-test-all docker-test-latest docker-test-py37 docker-test-py38 docker-test-py39 docker-test-py310 docker-test-py311 docs install test test-coverage test-init test-lint
 
 PYTHON_VERSION = "3.10"
 
@@ -46,6 +46,12 @@ docker-test-py39:
 
 docker-test-py310: PYTHON_VERSION = "3.10"
 docker-test-py310:
+	@echo "Testing Python:$(PYTHON_VERSION)"
+	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
+		sh -c 'python -m pip install -U -r ./requirements.txt && python -m unittest discover ./tests/'
+
+docker-test-py311: PYTHON_VERSION = "3.11.0rc2"
+docker-test-py311:
 	@echo "Testing Python:$(PYTHON_VERSION)"
 	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
 		sh -c 'python -m pip install -U -r ./requirements.txt && python -m unittest discover ./tests/'
