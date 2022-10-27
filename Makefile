@@ -50,7 +50,7 @@ docker-test-py310:
 	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
 		sh -c 'python -m pip install -U -r ./requirements.txt && python -m unittest discover ./tests/'
 
-docker-test-py311: PYTHON_VERSION = "3.11.0rc2"
+docker-test-py311: PYTHON_VERSION = "3.11"
 docker-test-py311:
 	@echo "Testing Python:$(PYTHON_VERSION)"
 	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
