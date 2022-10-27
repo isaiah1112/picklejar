@@ -1,5 +1,14 @@
 # Changelog
 
+## Release 3.0.1
+ * Moved Build Documentation step to release branches [0ac6158]
+ * Moved Build Documentation step to release branches [325ed38]
+ * Updated Makefile to include docker-test-[py37-py310] targets [60ca475]
+ * Adding Flake8 Linting to Makefile and Pipelines for release branches [e5d0dc1]
+ * Adding Python3.11.0rc2 to testing [c3ec8c9]
+ * Not running coverage command in automated tests [697f6a7]
+ * Bumping to Python3.11 image [fa0fe42]
+
 ## Release v3.0.0
  * Adding Python3.10 to testing [a56ed8a]
  * Updated requirements [e89c737]

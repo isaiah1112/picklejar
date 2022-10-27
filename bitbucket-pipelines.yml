@@ -15,7 +15,7 @@ pipelines:
           image: python:3.8
           script:
             - python -m pip install -U -r requirements.txt
-            - coverage run -m unittest discover tests/
+            - python -m unittest discover tests/
           caches:
             - pip
       - step: &py39
@@ -23,7 +23,7 @@ pipelines:
           image: python:3.9
           script:
             - python -m pip install -U -r requirements.txt
-            - coverage run -m unittest discover tests/
+            - python -m unittest discover tests/
           caches:
             - pip
       - step: &py310
@@ -31,7 +31,15 @@ pipelines:
           image: python:3.10
           script:
             - python -m pip install -U -r requirements.txt
-            - coverage run -m unittest discover tests/
+            - python -m unittest discover tests/
+          caches:
+            - pip
+      - step: &py311
+          name: Python 3.11 Tests
+          image: python:3.11
+          script:
+            - python -m pip install -U -r requirements.txt
+            - python -m unittest discover tests/
           caches:
             - pip
       - step: &pypy3
@@ -39,7 +47,7 @@ pipelines:
           image: pypy:3
           script:
             - python -m pip install -U -r requirements.txt
-            - coverage run -m unittest discover tests/
+            - python -m unittest discover tests/
           caches:
             - pip
   branches:
@@ -48,7 +56,14 @@ pipelines:
       - step: *py38
       - step: *py39
       - step: *py310
+      - step: *py311
       - step: *pypy3
+      - step:
+          name: Lint using Flake8
+          script:
+            - python -m pip install -U -r requirements.txt
+            - flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
+            - flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
       - step:
           name: Build Documentation
           script:
@@ -68,6 +83,7 @@ pipelines:
       - step: *py38
       - step: *py39
       - step: *py310
+      - step: *py311
       - step: *pypy3
       - step:
           name: Deploy To PyPi

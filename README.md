@@ -21,6 +21,12 @@ To run the tests for [picklejar] locally with your installed version of python, 
 make test
 ```
 
+To run tests across different versions of Python via [Docker](https://www.docker.com), install and start Docker, 
+then run:
+```commandline
+make docker-test-all
+```
+
 # Documentation
 All documentation for using picklejar can be found at [ReadTheDocs](http://picklejar.readthedocs.io/)
 
