@@ -6,40 +6,45 @@ pipelines:
           name: Python 3.8 Tests
           image: python:3.8
           script:
-            - python -m pip install .
-            - python -m unittest discover tests/
+            - python -m pip install poetry
+            - poetry install --with dev
+            - poetry run python -m unittest discover tests/
           caches:
             - pip
       - step: &py39
           name: Python 3.9 Tests
           image: python:3.9
           script:
-            - python -m pip install .
-            - python -m unittest discover tests/
+            - python -m pip install poetry
+            - poetry install --with dev
+            - poetry run python -m unittest discover tests/
           caches:
             - pip
       - step: &py310
           name: Python 3.10 Tests
           image: python:3.10
           script:
-            - python -m pip install .
-            - python -m unittest discover tests/
+            - python -m pip install poetry
+            - poetry install --with dev
+            - poetry run python -m unittest discover tests/
           caches:
             - pip
       - step: &py311
           name: Python 3.11 Tests
           image: python:3.11
           script:
-            - python -m pip install .
-            - python -m unittest discover tests/
+            - python -m pip install poetry
+            - poetry install --with dev
+            - poetry run python -m unittest discover tests/
           caches:
             - pip
       - step: &pypy3
           name: Pypy 3 Tests
           image: pypy:3
           script:
-            - python -m pip install .
-            - python -m unittest discover tests/
+            - python -m pip install poetry
+            - poetry install --with dev
+            - poetry run python -m unittest discover tests/
           caches:
             - pip
   branches:
@@ -52,9 +57,10 @@ pipelines:
       - step:
           name: Lint using Flake8
           script:
-            - python -m pip install .
-            - flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
-            - flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
+            - python -m pip install poetry
+            - poetry install --with dev
+            - poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
+            - poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
       - step:
           name: Build Documentation
           script:
