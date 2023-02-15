@@ -2,14 +2,6 @@ image: python:latest
 
 pipelines:
   default:
-      - step: &py37
-          name: Python 3.7 Tests
-          image: python:3.7
-          script:
-            - python -m pip install .
-            - coverage run -m unittest discover tests/
-          caches:
-            - pip
       - step: &py38
           name: Python 3.8 Tests
           image: python:3.8
@@ -52,7 +44,6 @@ pipelines:
             - pip
   branches:
     release/*:
-      - step: *py37
       - step: *py38
       - step: *py39
       - step: *py310
