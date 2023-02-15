@@ -1,5 +1,0 @@
-coverage>=6.4
-dill>=0.3.5
-discover>=0.4.0
-flake8>=5.0.4
-mock>=4.0.3
