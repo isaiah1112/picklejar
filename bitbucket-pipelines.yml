@@ -6,7 +6,7 @@ pipelines:
           name: Python 3.8 Tests
           image: python:3.8
           script:
-            - python -m pip install poetry
+            - pip install poetry
             - poetry install --with dev
             - poetry run python -m unittest discover tests/
           caches:
@@ -15,7 +15,7 @@ pipelines:
           name: Python 3.9 Tests
           image: python:3.9
           script:
-            - python -m pip install poetry
+            - pip install poetry
             - poetry install --with dev
             - poetry run python -m unittest discover tests/
           caches:
@@ -24,7 +24,7 @@ pipelines:
           name: Python 3.10 Tests
           image: python:3.10
           script:
-            - python -m pip install poetry
+            - pip install poetry
             - poetry install --with dev
             - poetry run python -m unittest discover tests/
           caches:
@@ -33,7 +33,7 @@ pipelines:
           name: Python 3.11 Tests
           image: python:3.11
           script:
-            - python -m pip install poetry
+            - pip install poetry
             - poetry install --with dev
             - poetry run python -m unittest discover tests/
           caches:
@@ -42,7 +42,7 @@ pipelines:
           name: Pypy 3 Tests
           image: pypy:3
           script:
-            - python -m pip install poetry
+            - pip install poetry
             - poetry install --with dev
             - poetry run python -m unittest discover tests/
           caches:
@@ -57,7 +57,7 @@ pipelines:
       - step:
           name: Lint using Flake8
           script:
-            - python -m pip install poetry
+            - pip install poetry
             - poetry install --with dev
             - poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
             - poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
@@ -72,9 +72,9 @@ pipelines:
           name: Deploy To Test PyPi
           trigger: manual
           script:
-            - pip install build twine
-            - python -m build
-            - twine upload --repository testpypi --non-interactive --username __token__ --password ${TEST_PYPI_PASSWORD} dist/*;
+            - pip install poetry
+            - poetry config repositories.test-pypi https://test.pypi.org/legacy/
+            - poetry publish --build --repository test-pypi --username __token__ --password ${TEST_PYPI_PASSWORD}
     master:
       - step: *py38
       - step: *py39
@@ -84,6 +84,5 @@ pipelines:
       - step:
           name: Deploy To PyPi
           script:
-            - pip install build twine
-            - python -m build
-            - twine upload --non-interactive --username __token__ --password ${PYPI_PASSWORD} dist/*;
+            - pip install poetry
+            - poetry publish --build --repository pypi --username __token__ --password ${TEST_PYPI_PASSWORD}
