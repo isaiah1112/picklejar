@@ -49,11 +49,6 @@ pipelines:
             - pip
   branches:
     release/*:
-      - step: *py38
-      - step: *py39
-      - step: *py310
-      - step: *py311
-      - step: *pypy3
       - step:
           name: Lint using Flake8
           script:
@@ -61,6 +56,13 @@ pipelines:
             - poetry install --with dev
             - poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
             - poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
+          caches:
+            - pip
+      - step: *py38
+      - step: *py39
+      - step: *py310
+      - step: *py311
+      - step: *pypy3
       - step:
           name: Build Documentation
           script:
@@ -75,6 +77,8 @@ pipelines:
             - pip install poetry
             - poetry config repositories.test-pypi https://test.pypi.org/legacy/
             - poetry publish --build --repository test-pypi --username __token__ --password ${TEST_PYPI_PASSWORD}
+          caches:
+            - pip
     master:
       - step: *py38
       - step: *py39
@@ -86,3 +90,5 @@ pipelines:
           script:
             - pip install poetry
             - poetry publish --build --repository pypi --username __token__ --password ${PYPI_PASSWORD}
+          caches:
+            - pip
