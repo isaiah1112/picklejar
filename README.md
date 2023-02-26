@@ -18,18 +18,6 @@ pip install picklejar
 # Documentation
 All documentation for using picklejar can be found at [ReadTheDocs](http://picklejar.readthedocs.io/)
 
-## Building Documentation Locally
-To install the packages required and build the Sphinx Documentation simply:
-```commandline
-make docs
-```
-
-This will install all the requirements to work on picklejar and then build the HTML documentation.
-To open the docs in your default browser, simply run:
-```commandline
-open docs/build/html/index.html
-```
-
 # Contributing
 Comments and enhancements are very welcome. To install [picklejar] for development purposes, first
 install [Poetry](https://python-poetry.org) and then run:
@@ -44,6 +32,18 @@ Report any issues or feature requests on the [BitBucket bug
 tracker](https://bitbucket.org/isaiah1112/picklejar/issues?status=new&status=open). Please include a minimal (not-) 
 working example which reproduces the bug and, if appropriate, the traceback information.  Please do not request features 
 already being worked towards.
+
+## Building Documentation Locally
+To install the packages required and build the Sphinx Documentation simply:
+```commandline
+make docs
+```
+
+This will install all the requirements to work on picklejar and then build the HTML documentation.
+To open the docs in your default browser, simply run:
+```commandline
+open docs/build/html/index.html
+```
 
 ## Testing
 To run the tests for [picklejar] locally with your installed version of python, simply run:
