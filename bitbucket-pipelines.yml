@@ -85,4 +85,4 @@ pipelines:
           name: Deploy To PyPi
           script:
             - pip install poetry
-            - poetry publish --build --repository pypi --username __token__ --password ${TEST_PYPI_PASSWORD}
+            - poetry publish --build --repository pypi --username __token__ --password ${PYPI_PASSWORD}
