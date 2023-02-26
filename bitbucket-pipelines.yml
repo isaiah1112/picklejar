@@ -2,6 +2,15 @@ image: python:latest
 
 pipelines:
   default:
+      - step: &lint
+          name: Lint using Flake8
+          script:
+            - pip install poetry
+            - poetry install --with dev
+            - poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
+            - poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
+          caches:
+            - pip
       - step: &py38
           name: Python 3.8 Tests
           image: python:3.8
@@ -49,15 +58,7 @@ pipelines:
             - pip
   branches:
     release/*:
-      - step:
-          name: Lint using Flake8
-          script:
-            - pip install poetry
-            - poetry install --with dev
-            - poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
-            - poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
-          caches:
-            - pip
+      - step: *lint
       - step: *py38
       - step: *py39
       - step: *py310
@@ -66,8 +67,8 @@ pipelines:
       - step:
           name: Build Documentation
           script:
-            - python -m pip install Sphinx
-            - sphinx-build -b html docs/source/ docs/build/html/
+            - pip install poetry --with docs
+            - poetry run sphinx-build -b html docs/source/ docs/build/html/
           caches:
             - pip
       - step:
@@ -80,6 +81,7 @@ pipelines:
           caches:
             - pip
     master:
+      - step: *lint
       - step: *py38
       - step: *py39
       - step: *py310
