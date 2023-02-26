@@ -1,5 +1,16 @@
 # Changelog
 
+## Release 3.1.0
+ * Updated Makefile to use non-literal variables. [a49742c]
+ * Updated Copyright [b040071]
+ * Removed `requirements.txt` and `setup.py`, replaced with `pyproject.toml` [dea545f]
+ * Updated pip install commands in Bitbuckets Pipelines [1bce391]
+ * Removing Python3.7 from BitBucket Pipelines [e89711d]
+ * Updated Bitbucket Pipelines to use Poetry [51dc57e]
+ * Removed install, install-dev, and test-init Makefile targets. [0fdc325]
+ * Updated bitbucket-pipelines to publish to PyPI instead of using build/twine [e526daa]
+ * Updated order of pipeline execution in release/* branches. [40b1555]
+
 ## Release 3.0.1
  * Moved Build Documentation step to release branches [325ed38]
  * Updated Makefile to include `docker-test-[py37-py310]` targets [60ca475]
