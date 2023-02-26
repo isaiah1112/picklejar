@@ -1,14 +1,17 @@
 PYTHON_VERSION := $(shell python --version | grep -Eo '[2-3].[0-9]+')
-POETRY := $(shell which poetry)
+POETRY := $(shell which poetry 2>/dev/null)
+
+.PHONY: init
+	@@if [ -z "$(POETRY)" ]; then echo "Please install 'poetry'"; exit 1; fi
 
 .PHONY: docs
-docs:
-	@if [ -z "$(POETRY)" ]; then echo "Please install 'poetry'"; exit 1; else poetry install --with docs; fi
+docs: init
+	@poetry install --with docs
 	@sphinx-build -b html docs/source/ docs/build/html/
 
 .PHONY: test
-test:
-	@if [ -z "$(POETRY)" ]; then echo "Please install 'poetry'"; exit 1; else poetry install --with dev; fi
+test: init
+	@poetry install --with dev
 	@echo "Testing Python:$(PYTHON_VERSION)"
 	@coverage run -m unittest discover tests/
 
@@ -17,8 +20,8 @@ test-coverage: test
 	@coverage html
 
 .PHONY: test-lint
-test-lint:
-	@if [ -z "$(POETRY)" ]; then echo "Please install 'poetry'"; exit 1; else poetry install --with dev; fi
+test-lint: init
+	@poetry install --with dev
 	@echo "Running Flake8"
 	@flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs
 	@flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs
