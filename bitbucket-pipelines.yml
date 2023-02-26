@@ -67,8 +67,8 @@ pipelines:
       - step:
           name: Build Documentation
           script:
-            - python -m pip install Sphinx
-            - sphinx-build -b html docs/source/ docs/build/html/
+            - pip install poetry --with docs
+            - poetry run sphinx-build -b html docs/source/ docs/build/html/
           caches:
             - pip
       - step:
