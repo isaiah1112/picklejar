@@ -47,6 +47,15 @@ pipelines:
             - poetry run python -m unittest discover tests/
           caches:
             - pip
+      - step: &py312
+          name: Python 3.12 Tests
+          image: python:3.12
+          script:
+            - pip install poetry
+            - poetry install --with dev
+            - poetry run python -m unittest discover tests/
+          caches:
+            - pip
       - step: &pypy3
           name: Pypy 3 Tests
           image: pypy:3
@@ -63,6 +72,7 @@ pipelines:
       - step: *py39
       - step: *py310
       - step: *py311
+      - step: *py312
       - step: *pypy3
       - step:
           name: Build Documentation
@@ -86,6 +96,7 @@ pipelines:
       - step: *py39
       - step: *py310
       - step: *py311
+      - step: *py312
       - step: *pypy3
       - step:
           name: Deploy To PyPi
