@@ -61,8 +61,8 @@ docker-test-py311:
 		sh -c 'python -m pip install poetry && poetry install --with dev && poetry run python -m unittest discover ./tests/'
 
 .PHONY: docker-test-py312
-docker-test-py311: PYTHON_VERSION := 3.12
-docker-test-py311:
+docker-test-py312: PYTHON_VERSION := 3.12
+docker-test-py312:
 	@echo "Testing Python:$(PYTHON_VERSION)"
 	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
 		sh -c 'python -m pip install poetry && poetry install --with dev && poetry run python -m unittest discover ./tests/'
