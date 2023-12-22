@@ -6,7 +6,7 @@ authors = ["Jesse Almanrode <jesse@almanrode.com>"]
 license = "GNU Lesser General Public License v3 or later (LGPLv3+)"
 readme = "README.md"
 homepage = "http://picklejar.readthedocs.io/"
-repository = "https://bitbucket.org/isaiah1112/picklejar/"
+repository = "https://github.com/isaiah1112/picklejar"
 packages = [{include = "picklejar.py"}]
 classifiers = ["Programming Language :: Python",
             "Intended Audience :: Developers",
