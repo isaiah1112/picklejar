@@ -26,10 +26,10 @@ poetry install --with dev
 ```
 
 Code contributions are encouraged: please feel free to [fork the
-project](https://bitbucket.org/isaiah1112/picklejar) and submit pull requests to the **develop** branch.
+project](https://github.com/isaiah1112/picklejar) and submit pull requests to the **develop** branch.
 
 Report any issues or feature requests on the [BitBucket bug
-tracker](https://bitbucket.org/isaiah1112/picklejar/issues?status=new&status=open). Please include a minimal (not-) 
+tracker](https://github.com/isaiah1112/picklejar/issues). Please include a minimal (not-) 
 working example which reproduces the bug and, if appropriate, the traceback information.  Please do not request features 
 already being worked towards.
 
@@ -59,4 +59,4 @@ make docker-test-all
 
 [GNU Lesser General Public License v3.0]: http://choosealicense.com/licenses/lgpl-3.0/ "LGPL v3"
 
-[picklejar]: https://bitbucket.org/isaiah1112/picklejar "picklejar Module"
+[picklejar]: https://github.com/isaiah1112/picklejar "picklejar Module"
