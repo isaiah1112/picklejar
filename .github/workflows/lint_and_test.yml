@@ -1,4 +1,4 @@
-name: PickleJar
+name: Lint and UnitTest
 
 on:
   push:
