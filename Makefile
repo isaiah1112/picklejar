@@ -7,6 +7,7 @@ POETRY := $(shell which poetry 2>/dev/null)
 .PHONY: docs
 docs: init
 	@poetry install --with docs
+	@poetry export --with docs -f requirements.txt --output docs/requirements.txt
 	@sphinx-build -b html docs/source/ docs/build/html/
 
 .PHONY: test
