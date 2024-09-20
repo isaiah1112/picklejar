@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "picklejar"
-version = "3.1.1"
+version = "4.0.0"
 description = "Read and write pickles to a single file"
 authors = ["Jesse Almanrode <jesse@almanrode.com>"]
 license = "GNU Lesser General Public License v3 or later (LGPLv3+)"
