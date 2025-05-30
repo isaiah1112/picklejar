@@ -7,7 +7,7 @@ file/jar.
 for the license text.
 
 ## Compatibility
-As of version 3.0.0, picklejar is compatible with the latest versions of Python3, and PyPy3!
+I attempt to maintain support for all [Supported versions of Python](https://devguide.python.org/versions/).
 
 # Installation/Getting Started
 The most straightforward way to get the picklejar module working for you is:
