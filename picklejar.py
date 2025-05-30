@@ -111,6 +111,3 @@ class Jar:
 
     # Protecting internal calls
     __exists = exists
-    __remove = remove
-    __load = load
-    __dump = dump
