@@ -94,6 +94,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *,cover
+.ruff_cache/
 
 # Translations
 *.mo
