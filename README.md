@@ -1,5 +1,6 @@
-# Overview
-[picklejar] is a python module that allows you to work with multiple pickles while reading/writing them to a single 
+![logo](docs/source/_static/picklejar.png "PickleJar")
+
+A python module that allows you to work with multiple pickles while reading/writing them to a single 
 file/jar.
 
 ## License
