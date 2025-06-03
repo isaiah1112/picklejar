@@ -13,21 +13,21 @@ jobs:
   build:
     strategy:
       matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install Poetry
-      uses: abatilo/actions-poetry@v2
+      uses: abatilo/actions-poetry@v4
     - name: Configure Poetry
       run: |
         poetry config virtualenvs.create true --local
         poetry config virtualenvs.in-project true --local
-    - uses: actions/cache@v3
+    - uses: actions/cache@v4
       name: Define a cache for the virtual environment based on the dependencies lock file
       with:
         path: ./.venv
@@ -35,12 +35,9 @@ jobs:
     - name: Install dependencies
       run: |
         poetry install --with dev
-    - name: Lint with flake8
+    - name: Lint with ruff
       run: |
-        # stop the build if there are Python syntax errors or undefined names
-        poetry run flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude docs,.venv
-        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-        poetry run flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude docs,.venv
+        poetry run ruff check picklejar.py
     - name: Run Tests
       run: |
         poetry run python -m unittest discover tests/
