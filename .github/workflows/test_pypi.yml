@@ -19,4 +19,4 @@ jobs:
         pip install uv
     - name: Publish to Test PyPI
       run: |
-        uv build && uv publish -index test-pypi --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }}
+        uv build && uv publish --index test-pypi --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }}
