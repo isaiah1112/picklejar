@@ -21,23 +21,12 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
-    - name: Install Poetry
-      uses: abatilo/actions-poetry@v4
-    - name: Configure Poetry
+    - name: Install UV
       run: |
-        poetry config virtualenvs.create true --local
-        poetry config virtualenvs.in-project true --local
-    - uses: actions/cache@v4
-      name: Define a cache for the virtual environment based on the dependencies lock file
-      with:
-        path: ./.venv
-        key: venv-${{ hashFiles('poetry.lock') }}
-    - name: Install dependencies
-      run: |
-        poetry install --with dev
+        pip install uv
     - name: Lint with ruff
       run: |
-        poetry run ruff check picklejar.py
+        uv run --group dev ruff check picklejar.py
     - name: Run Tests
       run: |
-        poetry run python -m unittest discover tests/
+        uv run --group dev python -m unittest discover tests/

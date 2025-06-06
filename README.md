@@ -21,9 +21,9 @@ All documentation for using picklejar can be found at [ReadTheDocs](http://pickl
 
 # Contributing
 Comments and enhancements are very welcome. To install [picklejar] for development purposes, first
-install [Poetry](https://python-poetry.org) and then run:
+install [UV](https://docs.astral.sh/uv/) and then run:
 ```commandline
-poetry install --with dev
+uv sync --group dev
 ```
 
 Code contributions are encouraged: please feel free to [fork the
