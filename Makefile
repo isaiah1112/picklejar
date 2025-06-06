@@ -2,6 +2,7 @@ PYTHON_VERSION := $(shell python --version | grep -Eo '[2-3].[0-9]+')
 UV_PATH := $(shell which uv 2>/dev/null)
 
 .PHONY: init
+init:
 	@if [ -z "$(UV_PATH)" ]; then curl -LsSf https://astral.sh/uv/install.sh | sh; fi
 
 .PHONY: docs
