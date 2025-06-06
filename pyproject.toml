@@ -1,47 +1,53 @@
-[tool.poetry]
+[project]
 name = "picklejar"
 version = "4.0.0"
 description = "Read and write pickles to a single file"
-authors = ["Jesse Almanrode <jesse@almanrode.com>"]
-license = "GNU Lesser General Public License v3 or later (LGPLv3+)"
+authors = [{ name = "Jesse Almanrode", email = "jesse@almanrode.com" }]
+requires-python = "<4.0,>3.9"
 readme = "README.md"
-homepage = "http://picklejar.readthedocs.io/"
-repository = "https://github.com/isaiah1112/picklejar"
-packages = [{include = "picklejar.py"}]
-classifiers = ["Programming Language :: Python",
-            "Intended Audience :: Developers",
-            "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
-            "Development Status :: 5 - Production/Stable",
-            "Programming Language :: Python",
-            "Programming Language :: Python :: 3.9",
-            "Programming Language :: Python :: 3.10",
-            "Programming Language :: Python :: 3.11",
-            "Programming Language :: Python :: 3.12",
-            "Programming Language :: Python :: 3.13",
-            "Programming Language :: Python :: Implementation :: PyPy",
-            "Topic :: Software Development :: Libraries",
-            "Topic :: Software Development :: Libraries :: Python Modules",
-            ]
+license = "LGPL-3.0-or-later"
+classifiers = [
+    "Programming Language :: Python",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
+    "Development Status :: 5 - Production/Stable",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = ["dill>=0.3,<0.4"]
 
-[tool.poetry.dependencies]
-python = "<4.0,>3.9"
-dill = "^0.3"
+[project.urls]
+Homepage = "http://picklejar.readthedocs.io/"
+Repository = "https://github.com/isaiah1112/picklejar"
 
-[tool.poetry.group.dev]
-optional = true
+[dependency-groups]
+dev = [
+    "coverage>=7,<8",
+    "discover>=0.4,<0.5",
+    "mock>=5,<6",
+    "ruff>=0.11.12,<0.12",
+]
+docs = ["sphinx>=6,<7"]
 
-[tool.poetry.group.dev.dependencies]
-coverage = "^7"
-discover = "^0.4"
-mock = "^5"
-ruff = "^0.11.12"
+[tool.hatch.build.targets.sdist]
+include = ["picklejar.py"]
 
-[tool.poetry.group.docs]
-optional = true
-
-[tool.poetry.group.docs.dependencies]
-sphinx = "^6"
+[tool.hatch.build.targets.wheel]
+include = ["picklejar.py"]
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[[tool.uv.index]]
+name = "testpypi"
+url = "https://test.pypi.org/simple/"
+publish-url = "https://test.pypi.org/legacy/"
+explicit = true
