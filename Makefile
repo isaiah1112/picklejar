@@ -30,35 +30,27 @@ docker-test-latest: docker-test-py313
 
 .PHONY: docker-test-py39
 docker-test-py39: PYTHON_VERSION := 3.9
-docker-test-py39:
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install uv && uv run --group dev python -m unittest discover ./tests/'
+docker-test-py39: --docker-test
 
 .PHONY: docker-test-py310
 docker-test-py310: PYTHON_VERSION := 3.10
-docker-test-py310:
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install uv && uv run --group dev python -m unittest discover ./tests/'
+docker-test-py310: --docker-test
 
 .PHONY: docker-test-py311
 docker-test-py311: PYTHON_VERSION := 3.11
-docker-test-py311:
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install uv && uv run --group dev python -m unittest discover ./tests/'
+docker-test-py311: --docker-test
 
 .PHONY: docker-test-py312
 docker-test-py312: PYTHON_VERSION := 3.12
-docker-test-py312:
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install uv && uv run --group dev python -m unittest discover ./tests/'
+docker-test-py312: --docker-test
 
 .PHONY: docker-test-py313
 docker-test-py313: PYTHON_VERSION := 3.13
-docker-test-py313:
+docker-test-py313: --docker-test
+
+# Private target for docker-tests
+.PHONY: --docker-test
+--docker-test:
 	@echo "Testing Python:$(PYTHON_VERSION)"
 	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
 		sh -c 'python -m pip install uv && uv run --group dev python -m unittest discover ./tests/'
