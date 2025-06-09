@@ -1,5 +1,22 @@
 # Changelog
 
+# Release v4.0.0
+ * Updated Makefile targets to check for `poetry` install [2895568]
+ * Updated pipelines to run lint step first everywhere [afa71ad]
+ * Added Python3.12 to tests now that it has been released. [2fbe745]
+ * Added Publish to PyPI workflow for new releases [298ae0f]
+ * Added manual GitHubAction for publishing to Test PyPI [d4c1b3a]
+ * Removed config file for BitBucket Pipelines [4af521d]
+ * Updated version and copyright info [2f6828e]
+ * Updated ReadTheDocs runner to use next LTS version of Ubuntu [2ec7e80]
+ * Added `ruff` linter to repo. [b5a7f1c]
+ * Added Python3.13 to supported versions. Dropped Python3.8. [e0b8286]
+ * Adding dependabot updates for GHActions [ce5efe9]
+ * Added CODEOWNERS file [432831e]
+ * Updated Picklejar Logo [e12c92a]
+ * Updated README with logo [d07c62d]
+ * Updated `pyproject.toml` to not allow Python v4.0 (yet) [ac242ce]
+
 ## Release 3.1.0
  * Updated Makefile to use non-literal variables. [a49742c]
  * Updated Copyright [b040071]
