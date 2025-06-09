@@ -26,7 +26,7 @@ jobs:
         pip install uv
     - name: Lint with ruff
       run: |
-        uv run --group dev ruff check picklejar.py
+        uv run --group test ruff check picklejar.py
     - name: Run Tests
       run: |
-        uv run --group dev python -m unittest discover tests/
+        uv run --group test python -m unittest discover tests/
