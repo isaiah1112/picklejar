@@ -12,7 +12,7 @@ docs: init
 
 .PHONY: test
 test: init
-	@uv run --group dev coverage run -m unittest discover tests/
+	@uv run --group test coverage run -m unittest discover tests/
 
 .PHONY: test-coverage
 test-coverage: test
@@ -20,7 +20,7 @@ test-coverage: test
 
 .PHONY: test-lint
 test-lint: init
-	@uv run --group dev ruff check picklejar.py
+	@uv run --group test ruff check picklejar.py
 
 .PHONY: docker-test-all
 docker-test-all: docker-test-py39 docker-test-py310 docker-test-py311 docker-test-py312 docker-test-py313
@@ -53,4 +53,4 @@ docker-test-py313: --docker-test
 --docker-test:
 	@echo "Testing Python:$(PYTHON_VERSION)"
 	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install uv && uv run --group dev python -m unittest discover ./tests/'
+		sh -c 'python -m pip install uv && uv run --group test python -m unittest discover ./tests/'

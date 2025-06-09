@@ -28,7 +28,7 @@ Homepage = "http://picklejar.readthedocs.io/"
 Repository = "https://github.com/isaiah1112/picklejar"
 
 [dependency-groups]
-dev = [
+test = [
     "coverage>=7,<8",
     "discover>=0.4,<0.5",
     "mock>=5,<6",
