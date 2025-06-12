@@ -15,17 +15,15 @@ The most straightforward way to get the picklejar module working for you is:
 ```commandline
 pip install picklejar
 ```
+or, for a local installation (after cloning the repo):
+```commandline
+make install
+```
 
 # Documentation
 All documentation for using picklejar can be found at [ReadTheDocs](http://picklejar.readthedocs.io/)
 
 # Contributing
-Comments and enhancements are very welcome. To install [picklejar] for development purposes, first
-install [UV](https://docs.astral.sh/uv/) and then run:
-```commandline
-uv sync --group dev
-```
-
 Code contributions are encouraged: please feel free to [fork the
 project](https://github.com/isaiah1112/picklejar) and submit pull requests to the **develop** branch.
 
