@@ -1,4 +1,4 @@
-![logo](docs/source/_static/picklejar.png "PickleJar")
+![logo](./logo.png "PickleJar")
 
 A python module that allows you to work with multiple pickles while reading/writing them to a single 
 file/jar.
@@ -31,18 +31,6 @@ Report any issues or feature requests on the [BitBucket bug
 tracker](https://github.com/isaiah1112/picklejar/issues). Please include a minimal (not-) 
 working example which reproduces the bug and, if appropriate, the traceback information.  Please do not request features 
 already being worked towards.
-
-## Building Documentation Locally
-To install the packages required and build the Sphinx Documentation simply:
-```commandline
-make docs
-```
-
-This will install all the requirements to work on picklejar and then build the HTML documentation.
-To open the docs in your default browser, simply run:
-```commandline
-open docs/build/html/index.html
-```
 
 ## Testing
 To run the tests for [picklejar] locally with your installed version of python, simply run:
