@@ -1,4 +1,3 @@
-# coding=utf-8
 """PickleJar is a python module that allows you to work with multiple pickles inside a single file (I call it a "jar")!
 """
 # Copyright (C) 2015-2025 Jesse Almanrode
@@ -18,8 +17,9 @@
 
 # Imports
 import os
-import dill
 from typing import Any
+
+import dill
 
 
 class Jar:
@@ -68,7 +68,7 @@ class Jar:
         """
         items = list()
         if self.__exists() is False:
-            raise IOError('File does not exist: ' + self.jar)
+            raise OSError('File does not exist: ' + self.jar)
         with open(self.jar, 'rb') as jar:
             while True:
                 try:
@@ -94,10 +94,7 @@ class Jar:
         :return: True on file write
         :rtype: bool
         """
-        if new_jar:
-            writemode = 'wb'
-        else:
-            writemode = 'ab'
+        writemode = 'wb' if new_jar else 'ab'
         with open(self.jar, writemode) as jar:
             if collapse:
                 dill.dump(items, jar, dill.HIGHEST_PROTOCOL)
