@@ -11,7 +11,7 @@ help:
 	@echo "  test               Run unit tests"
 	@echo "  coverage           Build an HTML coverage report"
 	@echo "  lint               Run 'ruff' linting on project"
-	@echo "  docker-test        Run unit tests in Docker container"
+	@echo "  docker-test [PYTHON_VERSION=X.X]        Run unit tests in Docker container"
 	@echo "\nSpecial Targets:"
 	@echo "  docker-test-all    Runs unit tests in Docker containers across all versions of Python"
 
@@ -55,4 +55,4 @@ docker-test-all:
 docker-test:
 	@echo "Testing Python:$(PYTHON_VERSION)"
 	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install uv && uv run --group test python -m unittest discover ./tests/'
+		sh -c 'python -m pip install --root-user-action=ignore uv && uv run --link-mode=copy --group test python -m unittest discover ./tests/'
