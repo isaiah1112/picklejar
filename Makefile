@@ -36,7 +36,7 @@ test: uv-init
 
 .PHONY: coverage
 coverage: test
-	@coverage html
+	@uv run --group test coverage html
 
 .PHONY: lint
 lint: uv-init
@@ -49,6 +49,7 @@ docker-test-all:
 	@$(MAKE) docker-test PYTHON_VERSION=3.11
 	@$(MAKE) docker-test PYTHON_VERSION=3.12
 	@$(MAKE) docker-test PYTHON_VERSION=3.13
+	@$(MAKE) docker-test PYTHON_VERSION=3.14
 
 # Private target for docker-tests
 .PHONY: docker-test
