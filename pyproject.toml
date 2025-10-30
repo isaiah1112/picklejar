@@ -3,7 +3,7 @@ name = "picklejar"
 version = "4.0.0"
 description = "Read and write pickles to a single file"
 authors = [{ name = "Jesse Almanrode", email = "jesse@almanrode.com" }]
-requires-python = "<4.0,>3.9"
+requires-python = "<4.0,>3.10"
 readme = "README.md"
 license = "LGPL-3.0-or-later"
 classifiers = [
@@ -12,11 +12,11 @@ classifiers = [
     "License :: OSI Approved :: GNU Lesser General Public License v3 or later (LGPLv3+)",
     "Development Status :: 5 - Production/Stable",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Libraries :: Python Modules",
