@@ -1,5 +1,5 @@
 # Default version of Python (for Docker testing)
-PYTHON_VERSION := "3.13"
+PYTHON_VERSION := "3.14"
 UV_PATH := $(shell which uv 2>/dev/null)
 
 .PHONY: help
@@ -44,7 +44,6 @@ lint: uv-init
 
 .PHONY: docker-test-all
 docker-test-all:
-	@$(MAKE) docker-test PYTHON_VERSION=3.9
 	@$(MAKE) docker-test PYTHON_VERSION=3.10
 	@$(MAKE) docker-test PYTHON_VERSION=3.11
 	@$(MAKE) docker-test PYTHON_VERSION=3.12
