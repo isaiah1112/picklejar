@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-# coding=utf-8
 """UnitTests for picklejar Python Module
 """
 
-import mock
-import picklejar
 import unittest
 import warnings
+from unittest import mock
+
+import picklejar
 
 __author__ = 'Jesse Almanrode (jesse@almanrode.com)'
 
@@ -43,9 +43,9 @@ class TestPickleJar(unittest.TestCase):
         """ Test whether we can read data from the Jar
         """
         mock_path.exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True):
-            with mock.patch('picklejar.dill.load', mock.Mock(side_effect=['test', 'data', EOFError()])):
-                self.assertTrue(isinstance(self.pkls.load(), list))
+        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True), \
+             mock.patch('picklejar.dill.load', mock.Mock(side_effect=['test', 'data', EOFError()])):
+            self.assertTrue(isinstance(self.pkls.load(), list))
         pass
 
     def test_startfresh(self):
@@ -60,9 +60,9 @@ class TestPickleJar(unittest.TestCase):
         """ Return a single item from a Jar (in the test case a string) as the original type (a string)
         """
         mock_path.exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True):
-            with mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
-                self.assertTrue(isinstance(self.pkls.load(always_list=False), str))
+        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True), \
+             mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
+            self.assertTrue(isinstance(self.pkls.load(always_list=False), str))
         pass
 
     @mock.patch('picklejar.os.path')
@@ -70,9 +70,9 @@ class TestPickleJar(unittest.TestCase):
         """ Return a single item from a Jar (in the test case a string) as a list with a single item (the string)
         """
         mock_path.exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True):
-            with mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
-                self.assertTrue(isinstance(self.pkls.load(always_list=True), list))
+        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True), \
+             mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
+            self.assertTrue(isinstance(self.pkls.load(always_list=True), list))
         pass
 
     def test_collapse(self):
@@ -87,11 +87,11 @@ class TestPickleJar(unittest.TestCase):
         """ Test whether a pickled list is returned as a two-dimensional list if always_list == True
         """
         mock_path.exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(), create=True):
-            with mock.patch('picklejar.dill.load', mock.Mock(side_effect=[[1, 2], EOFError()])):
-                r = self.pkls.load(always_list=True)
-                self.assertEqual(len(r), 1)
-                self.assertEqual(len(r[0]), 2)
+        with mock.patch('picklejar.open', mock.mock_open(), create=True), \
+             mock.patch('picklejar.dill.load', mock.Mock(side_effect=[[1, 2], EOFError()])):
+            r = self.pkls.load(always_list=True)
+            self.assertEqual(len(r), 1)
+            self.assertEqual(len(r[0]), 2)
         pass
 
     @mock.patch('picklejar.os.path')

@@ -1,67 +1,58 @@
-PYTHON_VERSION := $(shell python --version | grep -Eo '[2-3].[0-9]+')
-POETRY := $(shell which poetry 2>/dev/null)
+# Default version of Python (for Docker testing)
+PYTHON_VERSION := "3.14"
+UV_PATH := $(shell which uv 2>/dev/null)
 
-.PHONY: init
-	@@if [ -z "$(POETRY)" ]; then echo "Please install 'poetry'"; exit 1; fi
+.PHONY: help
+help:
+	@echo "Usage: make <target> [PYTHON_VERSION=3.11]"
+	@echo "\nTargets:"
+	@echo "  install            Install this package (pip install)"
+	@echo "  docs               Build Sphinx documentation"
+	@echo "  test               Run unit tests"
+	@echo "  coverage           Build an HTML coverage report"
+	@echo "  lint               Run 'ruff' linting on project"
+	@echo "  docker-test [PYTHON_VERSION=X.X]        Run unit tests in Docker container"
+	@echo "\nSpecial Targets:"
+	@echo "  docker-test-all    Runs unit tests in Docker containers across all versions of Python"
+
+
+# Install UV if it is not installed
+.PHONY: uv-init
+uv-init:
+	@if [ -z "$(UV_PATH)" ]; then curl -LsSf https://astral.sh/uv/install.sh | sh; fi
+
+.PHONY: install
+install:
+	@python -m pip install .
 
 .PHONY: docs
-docs: init
-	@poetry install --with docs
-	@poetry export --with docs -f requirements.txt --output docs/requirements.txt
-	@sphinx-build -b html docs/source/ docs/build/html/
+docs: uv-init
+	@uv export --group docs --format requirements.txt --no-hashes -o docs/requirements.txt >/dev/null
+	@uv run --group docs sphinx-build -b html docs/source/ docs/build/html/
 
 .PHONY: test
-test: init
-	@poetry install --with dev
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@coverage run -m unittest discover tests/
+test: uv-init
+	@uv run --group test coverage run -m unittest discover tests/
 
-.PHONY: test-coverage
-test-coverage: test
-	@coverage html
+.PHONY: coverage
+coverage: test
+	@uv run --group test coverage html
 
-.PHONY: test-lint
-test-lint: init
-	@poetry install --with dev
-	@ruff check picklejar.py
+.PHONY: lint
+lint: uv-init
+	@uv run --group test ruff check picklejar.py
 
 .PHONY: docker-test-all
-docker-test-all: docker-test-py39 docker-test-py310 docker-test-py311 docker-test-py312 docker-test-py313
+docker-test-all:
+	@$(MAKE) docker-test PYTHON_VERSION=3.10
+	@$(MAKE) docker-test PYTHON_VERSION=3.11
+	@$(MAKE) docker-test PYTHON_VERSION=3.12
+	@$(MAKE) docker-test PYTHON_VERSION=3.13
+	@$(MAKE) docker-test PYTHON_VERSION=3.14
 
-.PHONY: docker-test-latest
-docker-test-latest: docker-test-py313
-
-.PHONY: docker-test-py39
-docker-test-py39: PYTHON_VERSION := 3.9
-docker-test-py39:
+# Private target for docker-tests
+.PHONY: docker-test
+docker-test:
 	@echo "Testing Python:$(PYTHON_VERSION)"
 	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install poetry && poetry install --with dev && poetry run python -m unittest discover ./tests/'
-
-.PHONY: docker-test-py310
-docker-test-py310: PYTHON_VERSION := 3.10
-docker-test-py310:
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install poetry && poetry install --with dev && poetry run python -m unittest discover ./tests/'
-
-.PHONY: docker-test-py311
-docker-test-py311: PYTHON_VERSION := 3.11
-docker-test-py311:
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install poetry && poetry install --with dev && poetry run python -m unittest discover ./tests/'
-
-.PHONY: docker-test-py312
-docker-test-py312: PYTHON_VERSION := 3.12
-docker-test-py312:
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install poetry && poetry install --with dev && poetry run python -m unittest discover ./tests/'
-
-.PHONY: docker-test-py313
-docker-test-py313: PYTHON_VERSION := 3.13
-docker-test-py313:
-	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
-		sh -c 'python -m pip install poetry && poetry install --with dev && poetry run python -m unittest discover ./tests/'
+		sh -c 'python -m pip install --root-user-action=ignore uv && uv run --link-mode=copy --group test python -m unittest discover ./tests/'

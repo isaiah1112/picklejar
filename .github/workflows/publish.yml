@@ -11,22 +11,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python 3.13
-      uses: actions/setup-python@v5
+    - uses: actions/checkout@v6
+    - name: Set up Python 3.14
+      uses: actions/setup-python@v6
       with:
-        python-version: "3.13"
-    - name: Install Poetry
-      uses: abatilo/actions-poetry@v4
-    - name: Configure Poetry
+        python-version: "3.14"
+    - name: Install UV
       run: |
-        poetry config virtualenvs.create true --local
-        poetry config virtualenvs.in-project true --local
-    - uses: actions/cache@v4
-      name: Define a cache for the virtual environment based on the dependencies lock file
-      with:
-        path: ./.venv
-        key: venv-${{ hashFiles('poetry.lock') }}
+        pip install uv
     - name: Publish to PyPI
       run: |
-        poetry publish --build --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
+        uv build && uv publish --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}
