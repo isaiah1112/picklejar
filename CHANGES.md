@@ -1,4 +1,11 @@
-# Changelog
+# Release v4.1.0
+ * Migrated from `poetry` to `uv` [bccd60c]
+ * Added `help` target to Makefile and fixed bugs. [a0fd3e2]
+ * Added logo file and updated README [76c1163]
+ * Configured `ruff` and fixed issues [383a8b6]
+ * Added Python3.14 (dropping Python3.9) [4a36443]
+ * Bump actions/checkout from 4 to 5 [8901c72]
+ * Bump actions/setup-python from 5 to 6 [c69b773]
 
 # Release v4.0.0
  * Updated Makefile targets to check for `poetry` install [2895568]
