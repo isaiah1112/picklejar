@@ -1,7 +1,4 @@
-# Changelog
-
 # Release v4.1.0
-Jesse Almanrode (31):
  * Migrated from `poetry` to `uv` [bccd60c]
  * Added `help` target to Makefile and fixed bugs. [a0fd3e2]
  * Added logo file and updated README [76c1163]
