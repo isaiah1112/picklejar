@@ -1,5 +1,7 @@
 ![logo](./logo.png "PickleJar")
 
+[![Python Tests](https://github.com/isaiah1112/picklejar/actions/workflows/python-tests.yml/badge.svg)](https://github.com/isaiah1112/picklejar/actions/workflows/python-tests.yml)
+
 A python module that allows you to work with multiple pickles while reading/writing them to a single 
 file/jar.
 
