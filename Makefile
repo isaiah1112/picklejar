@@ -11,6 +11,7 @@ help:
 	@echo "  test               Run unit tests"
 	@echo "  coverage           Build an HTML coverage report"
 	@echo "  lint               Run 'ruff' linting on project"
+	@echo "  type               Run 'ty' type-checker on project"
 	@echo "  docker-test [PYTHON_VERSION=X.X]        Run unit tests in Docker container"
 	@echo "\nSpecial Targets:"
 	@echo "  docker-test-all    Runs unit tests in Docker containers across all versions of Python"
@@ -41,6 +42,10 @@ coverage: test
 .PHONY: lint
 lint: uv-init
 	@uv run --group test ruff check picklejar.py
+
+.PHONY: type
+type: uv-init
+	@uv run --group test ty check picklejar.py
 
 .PHONY: docker-test-all
 docker-test-all:
