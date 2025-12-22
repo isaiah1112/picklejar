@@ -1,6 +1,6 @@
 ![logo](./logo.png "PickleJar")
 
-[![Python Tests](https://github.com/isaiah1112/picklejar/actions/workflows/python-tests.yml/badge.svg)](https://github.com/isaiah1112/picklejar/actions/workflows/lint_and_test.yml)
+[![Python Tests](https://github.com/isaiah1112/picklejar/actions/workflows/lint_and_test.yml/badge.svg)](https://github.com/isaiah1112/picklejar/actions/workflows/lint_and_test.yml)
 
 A python module that allows you to work with multiple pickles while reading/writing them to a single 
 file/jar.
