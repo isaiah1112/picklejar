@@ -43,7 +43,7 @@ class TestPickleJar(unittest.TestCase):
         """ Test whether we can read data from the Jar
         """
         mock_path.exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True), \
+        with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
              mock.patch('picklejar.dill.load', mock.Mock(side_effect=['test', 'data', EOFError()])):
             self.assertTrue(isinstance(self.pkls.load(), list))
         pass
@@ -60,7 +60,7 @@ class TestPickleJar(unittest.TestCase):
         """ Return a single item from a Jar (in the test case a string) as the original type (a string)
         """
         mock_path.exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True), \
+        with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
              mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
             self.assertTrue(isinstance(self.pkls.load(always_list=False), str))
         pass
@@ -70,7 +70,7 @@ class TestPickleJar(unittest.TestCase):
         """ Return a single item from a Jar (in the test case a string) as a list with a single item (the string)
         """
         mock_path.exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=None), create=True), \
+        with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
              mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
             self.assertTrue(isinstance(self.pkls.load(always_list=True), list))
         pass
