@@ -19,15 +19,15 @@ class TestPickleJar(unittest.TestCase):
         self.pkls = picklejar.Jar('/tmp/pkljar-test.pkl')
         pass
 
-    @mock.patch('picklejar.os.path')
-    def test_exists(self, mock_path):
+    @mock.patch('picklejar.os.path.exists')
+    def test_exists(self, mock_exists):
         """ Test exists method of picklejar
         """
-        mock_path.exists.return_value = False
+        mock_exists.return_value = False
         self.assertFalse(self.pkls.exists())
         with self.assertRaises(IOError):
             self.pkls.load()
-        mock_path.exists.return_value = True
+        mock_exists.return_value = True
         self.assertTrue(self.pkls.exists())
         pass
 
@@ -38,11 +38,11 @@ class TestPickleJar(unittest.TestCase):
             self.assertTrue(self.pkls.dump(['string', 1, {'key': 'value'}]))
         pass
 
-    @mock.patch('picklejar.os.path')
-    def test_read(self, mock_path):
+    @mock.patch('picklejar.os.path.exists')
+    def test_read(self, mock_exists):
         """ Test whether we can read data from the Jar
         """
-        mock_path.exists.return_value = True
+        mock_exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
              mock.patch('picklejar.dill.load', mock.Mock(side_effect=['test', 'data', EOFError()])):
             self.assertTrue(isinstance(self.pkls.load(), list))
@@ -55,21 +55,21 @@ class TestPickleJar(unittest.TestCase):
             self.assertTrue(self.pkls.dump('test string', new_jar=True))
         pass
 
-    @mock.patch('picklejar.os.path')
-    def test_single(self, mock_path):
+    @mock.patch('picklejar.os.path.exists')
+    def test_single(self, mock_exists):
         """ Return a single item from a Jar (in the test case a string) as the original type (a string)
         """
-        mock_path.exists.return_value = True
+        mock_exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
              mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
             self.assertTrue(isinstance(self.pkls.load(always_list=False), str))
         pass
 
-    @mock.patch('picklejar.os.path')
-    def test_single_list(self, mock_path):
+    @mock.patch('picklejar.os.path.exists')
+    def test_single_list(self, mock_exists):
         """ Return a single item from a Jar (in the test case a string) as a list with a single item (the string)
         """
-        mock_path.exists.return_value = True
+        mock_exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
              mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
             self.assertTrue(isinstance(self.pkls.load(always_list=True), list))
@@ -82,11 +82,11 @@ class TestPickleJar(unittest.TestCase):
             self.assertTrue(self.pkls.dump([1, 2, 3], new_jar=True, collapse=True))
         pass
 
-    @mock.patch('picklejar.os.path')
-    def test_multi_dimensional_list(self, mock_path):
+    @mock.patch('picklejar.os.path.exists')
+    def test_multi_dimensional_list(self, mock_exists):
         """ Test whether a pickled list is returned as a two-dimensional list if always_list == True
         """
-        mock_path.exists.return_value = True
+        mock_exists.return_value = True
         with mock.patch('picklejar.open', mock.mock_open(), create=True), \
              mock.patch('picklejar.dill.load', mock.Mock(side_effect=[[1, 2], EOFError()])):
             r = self.pkls.load(always_list=True)
@@ -94,12 +94,12 @@ class TestPickleJar(unittest.TestCase):
             self.assertEqual(len(r[0]), 2)
         pass
 
-    @mock.patch('picklejar.os.path')
+    @mock.patch('picklejar.os.path.exists')
     @mock.patch('picklejar.os')
-    def test_remove_jar(self, mock_path, mock_os):
+    def test_remove_jar(self, mock_exists, mock_os):
         """ Clean up after all tests complete
         """
-        mock_path.exists.return_value = True
+        mock_exists.return_value = True
         self.assertTrue(self.pkls.exists())
         mock_os.remove.return_value = True
         self.assertTrue(self.pkls.remove())
