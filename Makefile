@@ -55,5 +55,5 @@ docker-test-all:
 .PHONY: docker-test
 docker-test:
 	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
+	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)-slim\
 		sh -c 'python -m pip install --root-user-action=ignore uv && uv run --link-mode=copy --group test python -m unittest discover ./tests/'
