@@ -2,6 +2,8 @@
 """UnitTests for picklejar Python Module
 """
 
+import os
+import tempfile
 import unittest
 import warnings
 from unittest import mock
@@ -16,94 +18,94 @@ class TestPickleJar(unittest.TestCase):
     def setUp(self):
         """ Init a new picklejar.Jar object
         """
-        self.pkls = picklejar.Jar('/tmp/pkljar-test.pkl')
-        pass
+        # Use a temporary file for testing instead of /tmp
+        self.temp_dir = tempfile.TemporaryDirectory()
+        self.temp_file = os.path.join(self.temp_dir.name, 'pkljar-test.pkl')
+        self.pkls = picklejar.Jar(self.temp_file)
 
-    @mock.patch('picklejar.os.path.exists')
-    def test_exists(self, mock_exists):
+    def tearDown(self):
+        """ Clean up temporary files
+        """
+        self.temp_dir.cleanup()
+
+    def test_exists(self):
         """ Test exists method of picklejar
         """
-        mock_exists.return_value = False
         self.assertFalse(self.pkls.exists())
-        with self.assertRaises(IOError):
+        with self.assertRaises(OSError):
             self.pkls.load()
-        mock_exists.return_value = True
+        # Create the file
+        self.pkls.dump('test data', new_jar=True)
         self.assertTrue(self.pkls.exists())
-        pass
 
     def test_new(self):
         """ Add test_data to new pkle file
         """
-        with mock.patch('picklejar.open', mock.mock_open(), create=True):
-            self.assertTrue(self.pkls.dump(['string', 1, {'key': 'value'}]))
-        pass
+        self.assertTrue(self.pkls.dump(['string', 1, {'key': 'value'}], new_jar=True))
+        self.assertTrue(self.pkls.exists())
 
-    @mock.patch('picklejar.os.path.exists')
-    def test_read(self, mock_exists):
+    def test_read(self):
         """ Test whether we can read data from the Jar
         """
-        mock_exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
-             mock.patch('picklejar.dill.load', mock.Mock(side_effect=['test', 'data', EOFError()])):
-            self.assertTrue(isinstance(self.pkls.load(), list))
-        pass
+        # Write some test data first
+        self.pkls.dump(['test', 'data'], new_jar=True)
+        # Now read it back
+        result = self.pkls.load()
+        self.assertTrue(isinstance(result, list))
+        self.assertEqual(result, ['test', 'data'])
 
     def test_startfresh(self):
         """ Overwrite an existing Jar file
         """
-        with mock.patch('picklejar.open', mock.mock_open(), create=True):
-            self.assertTrue(self.pkls.dump('test string', new_jar=True))
-        pass
+        # Create initial file
+        self.pkls.dump('initial data', new_jar=True)
+        # Overwrite with new_jar=True
+        self.assertTrue(self.pkls.dump('test string', new_jar=True))
+        result = self.pkls.load()
+        self.assertEqual(result, 'test string')
 
-    @mock.patch('picklejar.os.path.exists')
-    def test_single(self, mock_exists):
+    def test_single(self):
         """ Return a single item from a Jar (in the test case a string) as the original type (a string)
         """
-        mock_exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
-             mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
-            self.assertTrue(isinstance(self.pkls.load(always_list=False), str))
-        pass
+        self.pkls.dump('foo', new_jar=True)
+        result = self.pkls.load(always_list=False)
+        self.assertTrue(isinstance(result, str))
+        self.assertEqual(result, 'foo')
 
-    @mock.patch('picklejar.os.path.exists')
-    def test_single_list(self, mock_exists):
+    def test_single_list(self):
         """ Return a single item from a Jar (in the test case a string) as a list with a single item (the string)
         """
-        mock_exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(read_data=''), create=True), \
-             mock.patch('picklejar.dill.load', mock.Mock(side_effect=['foo', EOFError()])):
-            self.assertTrue(isinstance(self.pkls.load(always_list=True), list))
-        pass
+        self.pkls.dump('foo', new_jar=True)
+        result = self.pkls.load(always_list=True)
+        self.assertTrue(isinstance(result, list))
+        self.assertEqual(result, ['foo'])
 
     def test_collapse(self):
         """ Ensure a list of objects is written as a single pickle object
         """
-        with mock.patch('picklejar.open', mock.mock_open(), create=True):
-            self.assertTrue(self.pkls.dump([1, 2, 3], new_jar=True, collapse=True))
-        pass
+        self.assertTrue(self.pkls.dump([1, 2, 3], new_jar=True, collapse=True))
+        result = self.pkls.load()
+        # With collapse=True, the list should be pickled as a single object
+        self.assertEqual(result, [1, 2, 3])
 
-    @mock.patch('picklejar.os.path.exists')
-    def test_multi_dimensional_list(self, mock_exists):
+    def test_multi_dimensional_list(self):
         """ Test whether a pickled list is returned as a two-dimensional list if always_list == True
         """
-        mock_exists.return_value = True
-        with mock.patch('picklejar.open', mock.mock_open(), create=True), \
-             mock.patch('picklejar.dill.load', mock.Mock(side_effect=[[1, 2], EOFError()])):
-            r = self.pkls.load(always_list=True)
-            self.assertEqual(len(r), 1)
-            self.assertEqual(len(r[0]), 2)
-        pass
+        # Write a list as a single pickle
+        self.pkls.dump([1, 2], new_jar=True, collapse=True)
+        r = self.pkls.load(always_list=True)
+        self.assertEqual(len(r), 1)
+        self.assertEqual(len(r[0]), 2)
 
-    @mock.patch('picklejar.os.path.exists')
-    @mock.patch('picklejar.os')
-    def test_remove_jar(self, mock_exists, mock_os):
-        """ Clean up after all tests complete
+    def test_remove_jar(self):
+        """ Test removing a jar file
         """
-        mock_exists.return_value = True
+        # Create a jar file first
+        self.pkls.dump('test', new_jar=True)
         self.assertTrue(self.pkls.exists())
-        mock_os.remove.return_value = True
+        # Remove it
         self.assertTrue(self.pkls.remove())
-        pass
+        self.assertFalse(self.pkls.exists())
 
 
 if __name__ == '__main__':
