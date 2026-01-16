@@ -16,10 +16,14 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Imports
+import contextlib
 import os
 from typing import Any
 
 import dill
+
+# Constants
+DILL_PROTOCOL = dill.HIGHEST_PROTOCOL
 
 
 class Jar:
@@ -34,9 +38,22 @@ class Jar:
         self.jar = os.path.abspath(os.path.expanduser(filepath))
 
     def __enter__(self):
+        """Context manager entry
+
+        :return: Self
+        :rtype: Jar
+        """
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
+        """Context manager exit
+
+        :param exc_type: Exception type
+        :param exc_val: Exception value
+        :param exc_tb: Exception traceback
+        :return: None
+        :rtype: None
+        """
         return None
 
     def exists(self) -> bool:
@@ -53,7 +70,7 @@ class Jar:
         :return: True
         :rtype: bool
         """
-        if self.__exists():
+        with contextlib.suppress(FileNotFoundError):
             os.remove(self.jar)
         return True
 
@@ -64,11 +81,11 @@ class Jar:
         :type always_list: bool, optional
         :return: List of de-pickled objects or de-pickled object if always_list is False and pickled object is not list
         :rtype: Any
-        :raises: IOError
+        :raises OSError: If the jar file does not exist
         """
         items = list()
-        if self.__exists() is False:
-            raise OSError('File does not exist: ' + self.jar)
+        if not self.exists():
+            raise OSError(f'File does not exist: {self.jar}')
         with open(self.jar, 'rb') as jar:
             while True:
                 try:
@@ -91,20 +108,24 @@ class Jar:
         :param new_jar: Start a new jar (Default: False)
         :type new_jar: bool, optional
         :param collapse: If items is a list write list as single pickle
+        :type collapse: bool, optional
         :return: True on file write
         :rtype: bool
+        :raises IOError: If file cannot be written
         """
-        writemode = 'wb' if new_jar else 'ab'
-        with open(self.jar, writemode) as jar:
-            if collapse:
-                dill.dump(items, jar, dill.HIGHEST_PROTOCOL)
-            else:
-                if type(items) is list:
-                    for item in items:
-                        dill.dump(item, jar, dill.HIGHEST_PROTOCOL)
+        try:
+            writemode = 'wb' if new_jar else 'ab'
+            with open(self.jar, writemode) as jar:
+                if collapse:
+                    dill.dump(items, jar, DILL_PROTOCOL)
                 else:
-                    dill.dump(items, jar, dill.HIGHEST_PROTOCOL)
-        return True
+                    if isinstance(items, list):
+                        for item in items:
+                            dill.dump(item, jar, DILL_PROTOCOL)
+                    else:
+                        dill.dump(items, jar, DILL_PROTOCOL)
+            return True
+        except OSError as e:
+            raise OSError(f'Failed to write to jar file {self.jar}: {e}') from e
 
-    # Protecting internal calls
-    __exists = exists
+
