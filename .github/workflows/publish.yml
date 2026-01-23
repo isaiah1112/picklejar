@@ -17,8 +17,7 @@ jobs:
       with:
         python-version: "3.14"
     - name: Install UV
-      run: |
-        pip install uv
+      uses: astral-sh/setup-uv@v7
     - name: Publish to PyPI
       run: |
         uv build && uv publish --username __token__ --password ${{ secrets.PYPI_API_TOKEN }}

@@ -10,7 +10,7 @@ help:
 	@echo "  docs               Build Sphinx documentation"
 	@echo "  test               Run unit tests"
 	@echo "  coverage           Build an HTML coverage report"
-	@echo "  lint               Run 'ruff' linting on project"
+	@echo "  lint               Run 'ruff' linting and 'ty' type-checker on project"
 	@echo "  docker-test [PYTHON_VERSION=X.X]        Run unit tests in Docker container"
 	@echo "\nSpecial Targets:"
 	@echo "  docker-test-all    Runs unit tests in Docker containers across all versions of Python"
@@ -32,7 +32,7 @@ docs: uv-init
 
 .PHONY: test
 test: uv-init
-	@uv run --group test coverage run -m unittest discover tests/
+	@uv run --group test coverage run -m pytest
 
 .PHONY: coverage
 coverage: test
@@ -41,6 +41,7 @@ coverage: test
 .PHONY: lint
 lint: uv-init
 	@uv run --group test ruff check picklejar.py
+	@uv run --group test ty check picklejar.py
 
 .PHONY: docker-test-all
 docker-test-all:
@@ -54,5 +55,5 @@ docker-test-all:
 .PHONY: docker-test
 docker-test:
 	@echo "Testing Python:$(PYTHON_VERSION)"
-	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)\
+	@docker run -it --rm -v "$(PWD)":/usr/src/app -w /usr/src/app python:$(PYTHON_VERSION)-slim\
 		sh -c 'python -m pip install --root-user-action=ignore uv && uv run --link-mode=copy --group test python -m unittest discover ./tests/'

@@ -1,3 +1,13 @@
+# Release v4.2.0
+ * Added GitHub Actions badge [35b129a]
+ * Added `ty` type checking to project and GitHub Actions [7783aab]
+ * Moved `type` Makefile target into `lint` [31de3ec]
+ * Using `slim` python images to do local Docker testing [26e5073]
+ * Fixing bug in mock BytesIO object [3c8dc86]
+ * Attempting to fix GitHub Actions error [91983c6]
+ * Refactored module with modernized python code. [93b52c3]
+ * Updated unit tests to remove BytesIO warnings. [3909995]
+
 # Release v4.1.0
  * Migrated from `poetry` to `uv` [bccd60c]
  * Added `help` target to Makefile and fixed bugs. [a0fd3e2]

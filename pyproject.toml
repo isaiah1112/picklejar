@@ -1,6 +1,6 @@
 [project]
 name = "picklejar"
-version = "4.1.0"
+version = "4.2.0"
 description = "Read and write pickles to a single file"
 authors = [{ name = "Jesse Almanrode", email = "jesse@almanrode.com" }]
 requires-python = "<4.0,>3.10"
@@ -17,7 +17,6 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
-    "Programming Language :: Python :: Implementation :: PyPy",
     "Topic :: Software Development :: Libraries",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
@@ -32,7 +31,9 @@ test = [
     "coverage>=7,<8",
     "discover>=0.4,<0.5",
     "mock>=5,<6",
+    "pytest>=9.0.2",
     "ruff>=0.11.12,<0.12",
+    "ty>=0.0.5",
 ]
 docs = ["sphinx>=6,<7"]
 
