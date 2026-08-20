@@ -6,6 +6,7 @@ import os
 import tempfile
 import unittest
 import warnings
+from pathlib import Path
 from unittest import mock
 
 import picklejar
@@ -96,6 +97,21 @@ class TestPickleJar(unittest.TestCase):
         r = self.pkls.load(always_list=True)
         self.assertEqual(len(r), 1)
         self.assertEqual(len(r[0]), 2)
+
+    def test_tuple_items_are_written_individually(self):
+        """ Tuples should behave like lists for multi-item writes.
+        """
+        self.pkls.dump((1, 2, 3), new_jar=True)
+        result = self.pkls.load()
+        self.assertEqual(result, [1, 2, 3])
+
+    def test_pathlike_path_is_supported(self):
+        """ Path-like file paths should be accepted by Jar.
+        """
+        jar_path = Path(self.temp_dir.name) / 'pathlike.jar'
+        jar = picklejar.Jar(jar_path)
+        self.assertTrue(jar.dump(['a', 'b'], new_jar=True))
+        self.assertEqual(jar.load(), ['a', 'b'])
 
     def test_remove_jar(self):
         """ Test removing a jar file

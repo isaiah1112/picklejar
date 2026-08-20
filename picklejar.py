@@ -18,6 +18,7 @@
 # Imports
 import contextlib
 import os
+from os import PathLike
 from typing import Any
 
 import dill
@@ -27,15 +28,16 @@ DILL_PROTOCOL = dill.HIGHEST_PROTOCOL
 
 
 class Jar:
-    """A file containing multiple pickle objects
+    """A file containing multiple pickle objects.
 
-    :param filepath: Path to the file
-    :type filepath: str, required
+    :param filepath: Path to the jar file. Accepts str or os.PathLike values.
+    :type filepath: str | os.PathLike[str], required
     :return: None
     :rtype: None
     """
-    def __init__(self, filepath: str) -> None:
-        self.jar = os.path.abspath(os.path.expanduser(filepath))
+    def __init__(self, filepath: str | os.PathLike[str]) -> None:
+        normalized = os.fspath(filepath)
+        self.jar = os.path.abspath(os.path.expanduser(normalized))
 
     def __enter__(self):
         """Context manager entry
@@ -101,13 +103,13 @@ class Jar:
             return items
 
     def dump(self, items: Any, new_jar: bool = False, collapse: bool = False) -> bool:
-        """Write a Pickle to the file/jar.
+        """Write a pickled object or sequence of objects to the jar.
 
-        :param items: Item or list of items to pickle
+        :param items: Item or sequence of items to pickle
         :type items: Any
         :param new_jar: Start a new jar (Default: False)
         :type new_jar: bool, optional
-        :param collapse: If items is a list write list as single pickle
+        :param collapse: If items is a list/tuple, write it as a single pickle
         :type collapse: bool, optional
         :return: True on file write
         :rtype: bool
@@ -118,12 +120,11 @@ class Jar:
             with open(self.jar, writemode) as jar:
                 if collapse:
                     dill.dump(items, jar, DILL_PROTOCOL)
+                elif isinstance(items, list | tuple):
+                    for item in items:
+                        dill.dump(item, jar, DILL_PROTOCOL)
                 else:
-                    if isinstance(items, list):
-                        for item in items:
-                            dill.dump(item, jar, DILL_PROTOCOL)
-                    else:
-                        dill.dump(items, jar, DILL_PROTOCOL)
+                    dill.dump(items, jar, DILL_PROTOCOL)
             return True
         except OSError as e:
             raise OSError(f'Failed to write to jar file {self.jar}: {e}') from e
