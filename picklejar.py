@@ -18,8 +18,8 @@
 # Imports
 import contextlib
 import os
-from os import PathLike
-from typing import Any
+from types import TracebackType
+from typing import Any, Self
 
 import dill
 
@@ -39,7 +39,7 @@ class Jar:
         normalized = os.fspath(filepath)
         self.jar = os.path.abspath(os.path.expanduser(normalized))
 
-    def __enter__(self):
+    def __enter__(self) -> Self:
         """Context manager entry
 
         :return: Self
@@ -47,7 +47,12 @@ class Jar:
         """
         return self
 
-    def __exit__(self, exc_type, exc_val, exc_tb):
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
         """Context manager exit
 
         :param exc_type: Exception type
@@ -85,15 +90,17 @@ class Jar:
         :rtype: Any
         :raises OSError: If the jar file does not exist
         """
-        items = list()
-        if not self.exists():
-            raise OSError(f'File does not exist: {self.jar}')
-        with open(self.jar, 'rb') as jar:
-            while True:
-                try:
-                    items.append(dill.load(jar))
-                except EOFError:
-                    break
+        items = []
+        try:
+            with open(self.jar, 'rb') as jar:
+                while True:
+                    try:
+                        items.append(dill.load(jar))
+                    except EOFError:
+                        break
+        except FileNotFoundError as e:
+            raise OSError(f'File does not exist: {self.jar}') from e
+
         if len(items) == 1:
             if always_list:
                 return items
@@ -116,17 +123,12 @@ class Jar:
         :raises IOError: If file cannot be written
         """
         try:
-            writemode = 'wb' if new_jar else 'ab'
-            with open(self.jar, writemode) as jar:
-                if collapse:
-                    dill.dump(items, jar, DILL_PROTOCOL)
-                elif isinstance(items, list | tuple):
-                    for item in items:
-                        dill.dump(item, jar, DILL_PROTOCOL)
-                else:
-                    dill.dump(items, jar, DILL_PROTOCOL)
+            mode = 'wb' if new_jar else 'ab'
+            objects = items if isinstance(items, list | tuple) and not collapse else (items,)
+            with open(self.jar, mode) as jar:
+                for item in objects:
+                    dill.dump(item, jar, DILL_PROTOCOL)
             return True
         except OSError as e:
             raise OSError(f'Failed to write to jar file {self.jar}: {e}') from e
-
 

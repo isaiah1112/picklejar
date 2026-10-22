@@ -89,6 +89,14 @@ class TestPickleJar(unittest.TestCase):
         # With collapse=True, the list should be pickled as a single object
         self.assertEqual(result, [1, 2, 3])
 
+    def test_empty_sequence_and_collapsed_empty_sequence(self):
+        """Empty sequences preserve their distinct pickle counts."""
+        self.pkls.dump([], new_jar=True)
+        self.assertEqual(self.pkls.load(always_list=True), [])
+
+        self.pkls.dump([], new_jar=True, collapse=True)
+        self.assertEqual(self.pkls.load(always_list=True), [[]])
+
     def test_multi_dimensional_list(self):
         """ Test whether a pickled list is returned as a two-dimensional list if always_list == True
         """
