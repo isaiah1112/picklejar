@@ -2,50 +2,86 @@
 
 [![Python Tests](https://github.com/isaiah1112/picklejar/actions/workflows/lint_and_test.yml/badge.svg)](https://github.com/isaiah1112/picklejar/actions/workflows/lint_and_test.yml)
 
-A python module that allows you to work with multiple pickles while reading/writing them to a single 
-file/jar.
-
-## License
-[picklejar] is released under the [GNU Lesser General Public License v3.0], see the file LICENSE and LICENSE.lesser 
-for the license text.
+PickleJar stores one or more Python objects as pickles in a single file (a
+"jar") and reads them back in order. It uses [`dill`] for serialization.
 
 ## Compatibility
-I attempt to maintain support for all [Supported versions of Python](https://devguide.python.org/versions/).
 
-# Installation/Getting Started
-The most straightforward way to get the picklejar module working for you is:
-```commandline
-pip install picklejar
+PickleJar supports Python 3.11 through 3.15.
+
+## Installation
+
+Install the package from PyPI:
+
+```console
+python -m pip install picklejar
 ```
-or, for a local installation (after cloning the repo):
-```commandline
+
+## Quick start
+
+Create a jar and write objects to it:
+
+```python
+from picklejar import Jar
+
+jar = Jar("data.jar")
+jar.dump(["first object", {"answer": 42}], new_jar=True)
+```
+
+By default, `dump()` appends to an existing jar. Pass `new_jar=True` to
+overwrite it. Lists and tuples are written as separate pickle objects by
+default; pass `collapse=True` to store a list or tuple as one object instead.
+
+Read the objects back in order:
+
+```python
+objects = jar.load()
+print(objects)  # ["first object", {"answer": 42}]
+```
+
+`load()` returns the object itself when the jar contains exactly one pickle,
+and a list when it contains zero or multiple pickles. Use `always_list=True` to
+always receive a list, including when there is only one pickle. `Jar` also
+accepts `pathlib.Path` paths and supports `exists()` and `remove()` for basic
+file management.
+
+> **Warning:** Pickle files can execute code when loaded. Only load jars from
+> sources you trust.
+
+## Documentation
+
+See the [documentation on Read the Docs](https://picklejar.readthedocs.io/).
+
+## Development
+
+Clone the repository and install the package:
+
+```console
 make install
 ```
 
-# Documentation
-All documentation for using picklejar can be found at [ReadTheDocs](http://picklejar.readthedocs.io/)
+Run the test suite, linting, and type checks:
 
-# Contributing
-Code contributions are encouraged: please feel free to [fork the
-project](https://github.com/isaiah1112/picklejar) and submit pull requests to the **develop** branch.
-
-Report any issues or feature requests on the [BitBucket bug
-tracker](https://github.com/isaiah1112/picklejar/issues). Please include a minimal (not-) 
-working example which reproduces the bug and, if appropriate, the traceback information.  Please do not request features 
-already being worked towards.
-
-## Testing
-To run the tests for [picklejar] locally with your installed version of python, simply run:
-```commandline
+```console
 make test
+make lint
 ```
 
-To run tests across different versions of Python via [Docker](https://www.docker.com), install and start Docker, 
-then run:
-```commandline
+To run tests in Docker across the supported Python versions, install and start
+[Docker](https://www.docker.com/) and run:
+
+```console
 make docker-test-all
 ```
 
-[GNU Lesser General Public License v3.0]: http://choosealicense.com/licenses/lgpl-3.0/ "LGPL v3"
+Contributions are welcome. Please submit pull requests to the **develop**
+branch. Report bugs and feature requests through the
+[GitHub issue tracker](https://github.com/isaiah1112/picklejar/issues), with a
+minimal reproducing example and traceback when applicable.
 
-[picklejar]: https://github.com/isaiah1112/picklejar "picklejar Module"
+## License
+
+PickleJar is released under the [GNU Lesser General Public License v3.0 or
+later](./LICENSE) (see [LICENSE.lesser](./LICENSE.lesser) for the license text).
+
+[`dill`]: https://pypi.org/project/dill/
