@@ -1,10 +1,10 @@
 # Default version of Python (for Docker testing)
-PYTHON_VERSION := "3.14"
+PYTHON_VERSION := "3.15"
 UV_PATH := $(shell which uv 2>/dev/null)
 
 .PHONY: help
 help:
-	@echo "Usage: make <target> [PYTHON_VERSION=3.11]"
+	@echo "Usage: make <target> [PYTHON_VERSION=3.15]"
 	@echo "\nTargets:"
 	@echo "  install            Install this package (pip install)"
 	@echo "  docs               Build Sphinx documentation"
@@ -45,11 +45,11 @@ lint: uv-init
 
 .PHONY: docker-test-all
 docker-test-all:
-	@$(MAKE) docker-test PYTHON_VERSION=3.10
 	@$(MAKE) docker-test PYTHON_VERSION=3.11
 	@$(MAKE) docker-test PYTHON_VERSION=3.12
 	@$(MAKE) docker-test PYTHON_VERSION=3.13
 	@$(MAKE) docker-test PYTHON_VERSION=3.14
+	@$(MAKE) docker-test PYTHON_VERSION=3.15
 
 # Private target for docker-tests
 .PHONY: docker-test

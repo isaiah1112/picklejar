@@ -18,7 +18,7 @@ The package metadata and tool configuration live in:
 
 - Keep changes minimal and focused on the library behavior in `picklejar.py`.
 - Prefer preserving the public API of the `Jar` class unless a change explicitly requires a breaking update.
-- Maintain compatibility with Python 3.10+ as declared in `pyproject.toml`.
+- Maintain compatibility with Python 3.11+ as declared in `pyproject.toml`.
 - Treat the project as a library, not an application or service. There is no web app, backend server, or UI layer to update.
 - Prefer adding or updating tests in `tests/test_picklejar.py` for any behavior change.
 - Always use the repository-local `.venv` environment for Python package installation, dependency setup, and running unit tests. Do not install modules or execute Python commands with the system interpreter when `.venv` is available.
@@ -27,7 +27,7 @@ The package metadata and tool configuration live in:
 ## Repository conventions
 
 ### Python version and packaging
-- The project targets Python `>3.10,<4.0`.
+- The project targets Python `>=3.11,<4.0`.
 - Packaging uses `hatchling` and the source distribution includes only `picklejar.py`.
 - Dependencies are managed via `uv` and Python dependency groups in `pyproject.toml`.
 - This repository expects a local virtual environment at `.venv`; use it consistently for package installs and test execution.
